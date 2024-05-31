@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true" />
+        <!-- 카멜 케이스 매핑 설정 -->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <!-- 쿼리 결과 필드가 null인 경우, 누락되지 않도록 설정 -->
+        <setting name="callSettersOnNulls" value="true"/>
+        <!-- 쿼리에 보내는 파라미터가 null인 경우, 오류가 발생하는 것을 방지 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <!-- Apache Log4j2를 콘솔 로그가 안 보이는 경우 -->
+        <setting name="logImpl" value="LOG4J2"/>
+    </settings>
+    <!--ex01: root-context.xml - 패키지명 등록-->
+    <typeAliases>
+        <package name="com.example.myweb.domain"/>
+    </typeAliases>
+
+</configuration>

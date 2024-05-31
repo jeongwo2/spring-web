@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!--src/main/webapp/WEB-INF/spring/root-context.xml: 웹자원과 관련되지 않은 모든 자원의 설정-->
+    <!-- ex01: Root Context: defines shared resources visible to all other web components -->
+
+    <!-- ex03:
+    <context:annotation-config />
+    -->
+    <!--ex02 DataSource log4jdbc-log4j2 설정-->
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+            <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"></property> -->
+
+        <property name="driverClassName"
+                  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+        <property name="jdbcUrl"
+                  value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+
+        <property name="username" value="dev"></property>
+        <property name="password" value="dev$11g"></property>
+    </bean>
+
+    <!-- HikariCP configuration -->
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+          destroy-method="close">
+        <constructor-arg ref="hikariConfig" />
+    </bean>
+    <!--ex02 SqlSessionFactory 설정 : dataSource를 참조, mybatis-config.xml 경로설정-->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+    </bean>
+
+    <!--ex02  -->
+    <mybatis-spring:scan base-package="com.example.myweb.mapper" />
+
+    <!--ex02  -->
+    <context:component-scan
+        base-package="com.example.myweb.service"></context:component-scan>
+
+</beans>
