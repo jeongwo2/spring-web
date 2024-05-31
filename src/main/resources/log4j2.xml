@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="DEBUG">
+    <!-- log4j2.xml 설정파일을 로드할 때, 내부적으로 DEBUG 레벨로 찍고 있음 -->
+    <!-- 프로퍼티를 정의하여 로그 파일의 저장 경로를 설정 -->
+    <Properties>
+        <Property name="projectName">myweb </Property>
+        <Property name="logDir">C:/logs/log4j2/${projectName}</Property>
+        <Property name="archive">C:/logs/log4j2/${projectName}/archive</Property>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm} [%-5p] %M -%msg%n</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- 콜솔 -->
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd hh:mm} [%5p] %c -%msg%n"/>
+        </Console>
+        <RollingFile name="logFile"
+                     fileName="${logDir}/${date:yyyy-MM-dd}-${projectName}.log"
+                     filePattern="${logDir}/${projectName}-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <!-- 매일 새로운 로그 파일을 생성 -->
+                <TimeBasedTriggeringPolicy/>
+                <!-- 로그 파일 크기가 10MB를 초과하면 새로운 파일을 생성 -->
+                <SizeBasedTriggeringPolicy size="10MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="30">
+                <Delete basePath="${logDir}" maxDepth="2">
+                    <IfFileName glob="*.log.gz"/>
+                    <IfLastModified age="30d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <!-- ALL<TRACE<DEBUG<INFO<WARN<ERROR<FATAL<OFF -->
+    <Loggers>
+        <!-- 전체: root, 스프링 프레임워크: org.springframework -->
+        <Root level="DEBUG" additivity="false"> <!-- additivity=false: 로깅메시지 중복 방지 -->
+            <AppenderRef ref="logFile"/>
+            <AppenderRef ref="console"/>
+        </Root>
+
+        <!-- Application Loggers -->
+        <Logger name="com.example.myweb" additivity="false" >
+            <AppenderRef ref="console" level="INFO" />
+            <AppenderRef ref="logFile" level="DEBUG" />
+        </Logger>
+
+        <!-- Spring Framework: 베이스 패키지 구조로 잡아줘야 함 -->
+        <Logger name="org.springframework" additivity="false">
+            <AppenderRef ref="console" level="INFO" />
+            <AppenderRef ref="logFile" level="DEBUG" />
+        </Logger>
+
+        <!-- MyBatis 로거 설정 -->
+        <Logger name="org.apache.ibatis" additivity="false">
+            <AppenderRef ref="console" level="DEBUG" />
+            <AppenderRef ref="logFile" level="INFO" />
+        </Logger>
+
+        <Logger name="org.mybatis" additivity="false">
+            <AppenderRef ref="console" level="DEBUG" />
+            <AppenderRef ref="logFile" level="INFO" />
+        </Logger>
+
+        <Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false" >
+            <!-- 쿼리만 표시 -->
+            <Filters>
+                <MarkerFilter marker="LOG4JDBC_CONNECTION" onMatch="DENY" onMismatch="NEUTRAL" />
+                <MarkerFilter marker="LOG4JDBC_OTHER" onMatch="DENY" onMismatch="NEUTRAL" />
+            </Filters>
+        </Logger>
+
+        <!-- JDBC log SQL with timing information, post execution -->
+        <Logger name="jdbc.sqlonly" level="INFO" additivity="false">
+            <AppenderRef ref="logFile"/>  <!-- SQL 문장만 -->
+        </Logger>
+        <!-- ResultSet을 제외한 모든 JDBC 호출 정보 -->
+        <Logger name="jdbc.audit" level="INFO" additivity="false">
+            <AppenderRef ref="logFile"/>
+        </Logger>
+        <!-- ResultSet을 포함한 모든 JDBC 호출 정보 -->
+        <Logger name="jdbc.resultset" level="INFO" additivity="false">
+            <AppenderRef ref="logFile"/>
+        </Logger>
+        <!-- SQL 문장과 해당 SQL을 실행하는 데 걸린 시간 정보 -->
+        <Logger name="jdbc.sqltiming" level="DEBUG" >
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="logFile"/>
+        </Logger>
+        <!-- 결과 TABLE 형태로 출력 -->
+        <Logger name="jdbc.resultsettable" level="DEBUG" >
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="logFile"/>
+        </Logger>
+
+        <!-- SQL 문장 로깅 -->
+        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+        <!-- SQL 파라미터 로깅 -->
+        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="DEBUG" additivity="false">
+            <AppenderRef ref="console"/>
+        </Logger>
+
+        <!-- log4jdbc 로그: DEBUG 레벨의 로그를 콘솔에 출력, LOG4JDBC_NON_STATEMENT 마커가 있는 로그는 출력되지 않음 -->
+        <Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
+            <MarkerFilter marker="LOG4JDBC_NON_STATEMENT" onMatch="DENY" onMismatch="NEUTRAL" />
+            <appender-ref ref="console" />
+        </Logger>
+
+    </Loggers>
+
+</Configuration>
