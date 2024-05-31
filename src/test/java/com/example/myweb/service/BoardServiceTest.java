@@ -32,6 +32,12 @@ public class BoardServiceTest {
     }
 
     @Test
+    public void testGetList() {
+
+        service.getList().forEach(board -> log.info(board));
+    }
+
+    @Test
     public void testRegister() {
 
         BoardVO board = new BoardVO();
@@ -44,24 +50,32 @@ public class BoardServiceTest {
             service.register(board);
 
             bno = board.getBno();
-            log.info("생성된 게시물의 번호: " + bno);
+
         }catch (Exception e)
         {
             log.error(e.getMessage());
         }
-        if ( bno < 1 )
-        {
-            log.info("=== insertSelectKey ===");
-            boardMapper.insertSelectKey(board);
-        }
-
+        log.info("생성된 게시물의 번호: " + bno);
     }
 
     @Test
-    public void testGetList() {
+    public void testInsertSelectKey() {
 
-        service.getList().forEach(board -> log.info(board));
+        BoardVO board = new BoardVO();
+        board.setTitle("새로 작성하는 글");
+        board.setContent("새로 작성하는 내용");
+        board.setWriter("user2");
+
+        boardMapper.insertSelectKey(board);
+
+        Long bno = 0L;
+        bno = board.getBno();
+        if ( bno > 1 )
+        {
+            log.info("생성된 게시물의 번호: " + bno);
+        }
     }
+
 
     @Test
     public void testGetListWithPaging() {

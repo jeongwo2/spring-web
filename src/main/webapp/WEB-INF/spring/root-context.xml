@@ -20,12 +20,12 @@
             <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"></property> -->
 
         <property name="driverClassName"
-                  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+                  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="jdbcUrl"
-                  value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+                  value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
 
-        <property name="username" value="dev"></property>
-        <property name="password" value="dev$11g"></property>
+        <property name="username" value="dev"/>
+        <property name="password" value="dev$11g"/>
     </bean>
 
     <!-- HikariCP configuration -->
@@ -33,10 +33,10 @@
           destroy-method="close">
         <constructor-arg ref="hikariConfig" />
     </bean>
-    <!--ex02 SqlSessionFactory 설정 : dataSource를 참조, mybatis-config.xml 경로설정-->
+    <!--ex02 SqlSessionFactory 설정 : dataSource 를 참조, mybatis-config.xml 경로설정-->
     <bean id="sqlSessionFactory"
           class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"></property>
+        <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:/mybatis-config.xml"/>
     </bean>
 
@@ -44,7 +44,6 @@
     <mybatis-spring:scan base-package="com.example.myweb.mapper" />
 
     <!--ex02  -->
-    <context:component-scan
-        base-package="com.example.myweb.service"></context:component-scan>
+    <context:component-scan base-package="com.example.myweb.service"/>
 
 </beans>
