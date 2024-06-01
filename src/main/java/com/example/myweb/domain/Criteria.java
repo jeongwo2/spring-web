@@ -11,7 +11,7 @@ import lombok.ToString;
 public class Criteria {
 
   private int pageNum; // 현재페이지
-  private int amount;  // 페이지 당 로우수
+  private int pagePerNum;  // 페이지 당 로우수 amount 를 rename to pagePerNum
   
   private String type;  // 검색조건
   private String keyword; // 검색 키워드
@@ -20,9 +20,9 @@ public class Criteria {
     this(1, 10);
   }
 
-  public Criteria(int pageNum, int amount) {
+  public Criteria(int pageNum, int pagePerNum) {
     this.pageNum = pageNum;
-    this.amount = amount;
+    this.pagePerNum = pagePerNum;
   }
   
   public String[] getTypeArr() {

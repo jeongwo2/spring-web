@@ -2,6 +2,8 @@ package com.example.myweb.service;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.myweb.domain.BoardVO;
@@ -13,10 +15,12 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 //ex02
-@Log4j2
+//@Log4j2
 @Service
 @AllArgsConstructor
 public class BoardServiceImpl implements BoardService {
+
+	private static final Logger log = LogManager.getLogger(BoardServiceImpl.class);
 
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper boardMapper;
@@ -24,7 +28,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void register(BoardVO board) {
 
-		log.info("register......" + board);
+		log.info("register......{}" , board);
 
 		boardMapper.insertSelectKey(board);
 	}
@@ -32,7 +36,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardVO get(Long bno) {
 
-		log.info("get......" + bno);
+		log.info("get......by bno{}" , bno);
 
 		return boardMapper.read(bno);
 
@@ -41,7 +45,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean modify(BoardVO board) {
 
-		log.info("modify......" + board);
+		log.info("modify......by board{}" , board);
 
 		return boardMapper.update(board) == 1;
 	}
@@ -49,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public boolean remove(Long bno) {
 
-		log.info("remove...." + bno);
+		log.info("remove....by bno{}" , bno);
 
 		return boardMapper.delete(bno) == 1;
 	}
@@ -64,7 +68,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> getListWithPaging(Criteria cri) {
-		log.info("get List with criteria: " + cri);
+		log.info("아이템 목록을 검색 criteria{}" , cri);
 
 		return boardMapper.getListWithPaging(cri);
 	}
@@ -78,7 +82,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> getListWithSearch(Criteria cri) {
-		log.info("get List with search keyword: " + cri);
+		log.info("get List with search keyword{}}" , cri);
 		return boardMapper.getListWithSearch(cri);
 	}
 

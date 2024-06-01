@@ -69,41 +69,20 @@
                 <!-- /.table-responsive -->
                 <div class='row'>
                     <div class="col-lg-12">
-
                         <form id='searchForm' action="/board/list" method='get'>
+                            <!-- JSP 의 표현 언어(EL)를 사용하여 조건부 논리를 HTML 속성 안에서 처리 -->
                             <select name="type">
-                                <option value=""
-                                <c:if test="${pageMaker.cri.type == null}"> selected</c:if>
-                                >--
-                                </option>
-                                <option value="T"
-                                <c:if test="${pageMaker.cri.type eq 'T'}"> selected</c:if>
-                                >제목
-                                </option>
-                                <option value="C"
-                                   <c:if test="${pageMaker.cri.type eq 'C'}"> selected </c:if>
-                                >내용
-                                </option>
-                                <option value="W"
-                                   <c:if test="${pageMaker.cri.type eq 'W'}"> selected </c:if>
-                                >작성자
-                                </option>
-                                <option value="TC"
-                                   <c:if test="${pageMaker.cri.type eq 'TC'}"> selected </c:if>
-                                >제목 or 내용
-                                </option>
-                                <option value="TW"
-                                   <c:if test="${pageMaker.cri.type eq 'TW'}"> selected </c:if>
-                                >제목 or 작성자
-                                </option>
-                                <option value="TWC"
-                                   <c:if test="${pageMaker.cri.type eq 'TWC'}"> selected </c:if>
-                                >제목 or 내용 or 작성자
-                                </option>
+                                <option value="" ${pageMaker.cri.type == null ? 'selected' : ''}>-- </option>
+                                <option value="T" ${pageMaker.cri.type == 'T' ? 'selected' : ''}>제목 </option>
+                                <option value="C" ${pageMaker.cri.type == 'C' ? 'selected' : ''}>내용 </option>
+                                <option value="W" ${pageMaker.cri.type == 'W' ? 'selected' : ''}>작성자 </option>
+                                <option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected' : ''}>제목 or 내용 </option>
+                                <option value="TW" ${pageMaker.cri.type == 'TW' ? 'selected' : ''}>제목 or 작성자 </option>
+                                <option value="TWC" ${pageMaker.cri.type == 'TWC' ? 'selected' : ''}>제목 or 내용 or 작성자 </option>
                             </select>
-                            <input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>'/>
-                            <input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
-                            <input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>'/>
+                            <input type='text'   name='keyword' value='${pageMaker.cri.keyword}'/>
+                            <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'/>
+                            <input type='hidden' name='amount'  value='${pageMaker.cri.pagePerNum}' />
                             <button class='btn btn-default'>Search</button>
                         </form>
                     </div>
@@ -157,7 +136,7 @@
 
             <form id='actionForm' action="/board/list" method='get'>
                 <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
-                <input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+                <input type='hidden' name='amount' value='${pageMaker.cri.pagePerNum}'>
 
                 <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
