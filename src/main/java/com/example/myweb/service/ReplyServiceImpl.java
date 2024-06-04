@@ -1,15 +1,15 @@
 package com.example.myweb.service;
 
-import java.util.List;
-import org.springframework.stereotype.Service;
 import com.example.myweb.domain.Criteria;
 import com.example.myweb.domain.ReplyPageDTO;
 import com.example.myweb.domain.ReplyVO;
 import com.example.myweb.mapper.ReplyMapper;
-
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * This class implements the ReplyService interface and provides methods for managing reply data.

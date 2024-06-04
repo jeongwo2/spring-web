@@ -1,9 +1,9 @@
 package com.example.myweb.mapper;
 
-import java.util.List;
-
 import com.example.myweb.domain.BoardVO;
 import com.example.myweb.domain.Criteria;
+
+import java.util.List;
 
 //ex02
 public interface BoardMapper {

@@ -1,9 +1,9 @@
 package com.example.myweb.service;
 
-import java.util.List;
-
 import com.example.myweb.domain.BoardVO;
 import com.example.myweb.domain.Criteria;
+
+import java.util.List;
 
 //ex02
 public interface BoardService {

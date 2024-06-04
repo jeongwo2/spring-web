@@ -1,18 +1,16 @@
 package com.example.myweb.service;
 
-import java.util.List;
-
+import com.example.myweb.domain.BoardVO;
+import com.example.myweb.domain.Criteria;
+import com.example.myweb.mapper.BoardMapper;
+import lombok.AllArgsConstructor;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.myweb.domain.BoardVO;
-import com.example.myweb.domain.Criteria;
-import com.example.myweb.mapper.BoardMapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
+import java.util.List;
 
 //ex02
 //@Log4j2

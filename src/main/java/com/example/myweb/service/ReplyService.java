@@ -1,10 +1,10 @@
 package com.example.myweb.service;
 
-import java.util.List;
-
 import com.example.myweb.domain.Criteria;
 import com.example.myweb.domain.ReplyPageDTO;
 import com.example.myweb.domain.ReplyVO;
+
+import java.util.List;
 /**
  * This interface defines the contract for the Reply Service.
  * It provides methods for managing replies in a web application.

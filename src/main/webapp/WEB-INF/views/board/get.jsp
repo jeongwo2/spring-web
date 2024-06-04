@@ -343,4 +343,84 @@ pageEncoding="UTF-8"%>
     }); // ready
 </script>
 
+<!-- ex05: 서버에서 첨부파일 목록을 가져오는 기능 -->
+<script>
+    $(document).ready(function(){
+    // 변수 bno를 초기화하고, 서버에서 첨부파일 목록을 가져옵니다.
+   (function(){
+     var bno = '<c:out value="${board.bno}"/>';
+
+     /* $.getJSON("/board/getAttachList", {bno: bno}, function(arr){
+       console.log(arr);
+     }); *///end getjson
+
+     $.getJSON("/board/getAttachList", {bno: bno}, function(arr){
+        console.log(arr);
+        var str = "";
+        // arr 배열을 순회하며, 각 첨부파일에 대한 HTML 문자열을 생성합니다.
+        $(arr).each(function(i, attach){
+          // 첨부파일이 이미지 타입인 경우
+          if(attach.fileType){
+            var fileCallPath =  encodeURIComponent( attach.uploadPath+ "/s_"+attach.uuid +"_"+attach.fileName);
+
+            str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+            str += "<img src='/display?fileName="+fileCallPath+"'>";
+            str += "</div>";
+            str +"</li>";
+          }else{
+
+            str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"' ><div>";
+            str += "<span> "+ attach.fileName+"</span><br/>";
+            str += "<img src='/resources/img/attach.png'></a>";
+            str += "</div>";
+            str +"</li>";
+          }
+        });
+        // HTML 문자열을.uploadResult ul 요소에 추가합니다.
+        $(".uploadResult ul").html(str);
+
+      });//end getjson
+
+   })();//end function
+
+   //.uploadResult ul 요소에서 클릭 이벤트를 감지합니다.
+   $(".uploadResult").on("click","li", function(e){
+     console.log("view image");
+
+     var liObj = $(this);
+     var path = encodeURIComponent(liObj.data("path")+"/" + liObj.data("uuid")+"_" + liObj.data("filename"));
+     // 클릭한 첨부파일이 이미지 타입인 경우 showImage 함수를 호출합니다.
+     if(liObj.data("type")){
+       showImage(path.replace(new RegExp(/\\/g),"/"));
+     }else {
+       //클릭한 첨부파일이 이미지 타입이 아닌 경우, 다운로드 링크로 이동합니다.
+       self.location ="/download?fileName="+path
+     }
+
+   });
+
+   // showImage 함수: 클릭한 첨부파일을 화면에 표시합니다.
+   function showImage(fileCallPath){
+     alert(fileCallPath);
+     //.bigPictureWrapper 요소를 표시하고,.bigPicture 요소에 이미지를 추가합니다.
+     $(".bigPictureWrapper").css("display","flex").show();
+
+     $(".bigPicture")
+     .html("<img src='/display?fileName="+fileCallPath+"' >")
+     .animate({width:'100%', height: '100%'}, 1000);
+
+   }
+   //.bigPictureWrapper 요소에서 클릭 이벤트를 감지합니다.
+   $(".bigPictureWrapper").on("click", function(e){
+     //bigPicture 요소를 숨깁니다.
+     $(".bigPicture").animate({width:'0%', height: '0%'}, 1000);
+     setTimeout(function(){
+       $('.bigPictureWrapper').hide();
+     }, 1000);
+   });
+
+
+ });
+</script>
+
 <%@include file="../includes/footer.jsp"%>

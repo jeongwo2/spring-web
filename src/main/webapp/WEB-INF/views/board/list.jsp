@@ -72,13 +72,13 @@
                         <form id='searchForm' action="/board/list" method='get'>
                             <!-- JSP 의 표현 언어(EL)를 사용하여 조건부 논리를 HTML 속성 안에서 처리 -->
                             <select name="type">
-                                <option value="" ${pageMaker.cri.type == null ? 'selected' : ''}>-- </option>
-                                <option value="T" ${pageMaker.cri.type == 'T' ? 'selected' : ''}>제목 </option>
-                                <option value="C" ${pageMaker.cri.type == 'C' ? 'selected' : ''}>내용 </option>
-                                <option value="W" ${pageMaker.cri.type == 'W' ? 'selected' : ''}>작성자 </option>
-                                <option value="TC" ${pageMaker.cri.type == 'TC' ? 'selected' : ''}>제목 or 내용 </option>
-                                <option value="TW" ${pageMaker.cri.type == 'TW' ? 'selected' : ''}>제목 or 작성자 </option>
-                                <option value="TWC" ${pageMaker.cri.type == 'TWC' ? 'selected' : ''}>제목 or 내용 or 작성자 </option>
+                                <option value="" ${empty pageMaker.cri.type? "selected" : ""}>-- </option>
+                                <option value="T" ${pageMaker.cri.type eq 'T'? "selected" : ""}>제목 </option>
+                                <option value="C" ${pageMaker.cri.type eq 'C'? "selected" : ""}>내용 </option>
+                                <option value="W" ${pageMaker.cri.type eq 'W'? "selected" : ""}>작성자 </option>
+                                <option value="TC" ${pageMaker.cri.type eq 'TC'? "selected" : ""}>제목 or 내용 </option>
+                                <option value="TW" ${pageMaker.cri.type eq 'TW'? "selected" : ""}>제목 or 작성자 </option>
+                                <option value="TWC" ${pageMaker.cri.type eq 'TWC'? "selected" : ""}>제목 or 내용 or 작성자 </option>
                             </select>
                             <input type='text'   name='keyword' value='${pageMaker.cri.keyword}'/>
                             <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'/>
@@ -97,7 +97,8 @@
                             </li>
                         </c:if>
 
-                        <c:forEach var="num" begin="${pageMaker.startPage}"
+                        <c:forEach var="num"
+                                   begin="${pageMaker.startPage}"
                                    end="${pageMaker.endPage}">
                             <li class="paginate_button  ${pageMaker.cri.pageNum == num ? " active":""} ">
                             <a href=" ${num}">${num}</a>
@@ -165,11 +166,8 @@
             if (result === '' || history.state) {
                 return;
             }
-            if (parseInt(result) > 0) {
-                $(".modal-body").html(
-                    "게시글 " + parseInt(result)
-                    + " 번이 등록되었습니다.");
-            }
+            const message = "게시글 " + parseInt(result) + " 번이 등록되었습니다.";
+            $(".modal-body").html(message);
             $("#myModal").modal("show");
         }
 
@@ -177,7 +175,7 @@
             self.location = "/board/register";
         });
 
-        var actionForm = $("#actionForm");
+        const actionForm = $("#actionForm");
 
         $(".paginate_button a").on(
             "click",
