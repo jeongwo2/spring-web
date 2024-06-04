@@ -18,7 +18,7 @@
         <build.sourceEncoding>UTF-8</build.sourceEncoding>
         <!-- Spring-Framework Jul 13, 2023 기준 -->
         <org.springframework-version>5.2.25.RELEASE</org.springframework-version>
-        <spring-security-version>5.7.5</spring-security-version> <!-- 취약점 개선 -->
+        <spring-security-version>5.2.11.RELEASE</spring-security-version> <!-- 취약점 개선 -->
         <org.aspectj-version>1.9.0</org.aspectj-version>
         <org.slf4j-version>2.0.0</org.slf4j-version>
         <log4j2-version>2.17.1</log4j2-version>
@@ -162,7 +162,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.1</version>
             <scope>test</scope>
         </dependency>
         <!-- Spring-Test Add -->
@@ -223,7 +223,7 @@
             <version>${mybatis-spring-version}</version>
         </dependency>
 
-        <!-- SQL을 변환해 PreparedStatement 에 사용된 '?'가 값 확인 -->
+        <!-- SQL 을 변환해 PreparedStatement 에 사용된 '?'가 값 확인 -->
         <dependency>
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
             <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
@@ -250,7 +250,7 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson-version}</version>
         </dependency>
-        <!-- 객체를 XML로 변환 -->
+        <!-- 객체를 XML 로 변환 -->
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>

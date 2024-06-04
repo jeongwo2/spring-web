@@ -2,22 +2,22 @@
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!-- ex02 modify.jsp -->
+<!-- ex02 modify.jsp : [수정/삭제] 페이지 -->
 <%@include file="../includes/header.jsp"%>
 
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Board Modify</h1>
+        <h1 class="page-header">Board Modify[게시글 수정]</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
+<!-- div#게시글 수정 -->
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
 
-            <div class="panel-heading">Board Modify</div>
+            <div class="panel-heading">Modify[수정]</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
 
@@ -76,23 +76,19 @@ pageEncoding="UTF-8"%>
     <!-- end panel -->
 </div>
 <!-- /.row -->
-
+<!--ex02 jQuery: 첨부파일 원본 이미지 보기 -->
 <script type="text/javascript">
     $(document).ready(function() {
-
+          // 즉시 실행 함수를 이용해서 첨부파일 목록 가져오기
           var formObj = $("form");
 
           $('button').on("click", function(e){
-
             e.preventDefault();
-
             var operation = $(this).data("oper");
-
             console.log(operation);
 
             if(operation === 'remove'){
               formObj.attr("action", "/board/remove");
-
             }else if(operation === 'list'){
               //move to list
               formObj.attr("action", "/board/list").attr("method","get");
@@ -109,10 +105,8 @@ pageEncoding="UTF-8"%>
               formObj.append(keywordTag);
               formObj.append(typeTag);
             }
-
             formObj.submit();
           });
-
     });
 </script>
 

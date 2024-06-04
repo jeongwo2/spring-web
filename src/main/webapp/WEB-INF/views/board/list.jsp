@@ -90,25 +90,6 @@
 
                 <div class='pull-right'>
                     <ul class="pagination">
-                        <%--
-                        <c:if test="${pageMaker.prev}">
-                            <li class="paginate_button previous">
-                                <a href="#">Previous</a>
-                            </li>
-                        </c:if>
-
-                        <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                            <li class="paginate_button">
-                                <a href="#">${num}</a>
-                            </li>
-                        </c:forEach>
-
-                        <c:if test="${pageMaker.next}">
-                            <li class="paginate_button next">
-                                <a href="#">Next</a>
-                            </li>
-                        </c:if>
-                        --%>
 
                         <c:if test="${pageMaker.prev}">
                             <li class="paginate_button previous">
@@ -133,7 +114,7 @@
                 </div>
                 <!--  end Pagination -->
             </div>
-
+            <!-- action /board/list -->
             <form id='actionForm' action="/board/list" method='get'>
                 <input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
                 <input type='hidden' name='amount' value='${pageMaker.cri.pagePerNum}'>
@@ -141,33 +122,29 @@
                 <input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'>
                 <input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
             </form>
+            <!-- action /board/list -->
 
-            <!-- modal  추가 -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-                 aria-labelledby="myModalLabel" aria-hidden="true">
+            <!-- ex02 modal  추가 -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-hidden="true">&times;
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
                             </button>
                             <h4 class="modal-title" id="myModalLabel">Modal title</h4>
                         </div>
                         <div class="modal-body">처리가 완료되었습니다.</div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">
-                                Save changes
-                            </button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
                 <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
+            <!-- /.modal 추가 end -->
 
         </div>
         <!-- end panel-body -->
@@ -177,7 +154,6 @@
 <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -189,7 +165,6 @@
             if (result === '' || history.state) {
                 return;
             }
-
             if (parseInt(result) > 0) {
                 $(".modal-body").html(
                     "게시글 " + parseInt(result)
@@ -230,24 +205,18 @@
 
         $("#searchForm button").on("click", function (e) {
 
-            if (!searchForm.find("option:selected")
-                .val()) {
+            if (!searchForm.find("option:selected").val()) {
                 alert("검색종류를 선택하세요");
                 return false;
             }
-
             if (!searchForm.find(
                 "input[name='keyword']").val()) {
                 alert("키워드를 입력하세요");
                 return false;
             }
-
-            searchForm.find("input[name='pageNum']")
-                .val("1");
+            searchForm.find("input[name='pageNum']").val("1");
             e.preventDefault();
-
             searchForm.submit();
-
         });
 
     });

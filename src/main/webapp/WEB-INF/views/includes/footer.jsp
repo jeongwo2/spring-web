@@ -25,17 +25,18 @@
     <script src="/resources/dist/js/sb-admin-2.js"></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-  $(document).ready(function() {
-    $('#dataTables-example').DataTable({
-      responsive: true
-    });
-    $(".sidebar-nav")
-      .attr("class","sidebar-nav navbar-collapse collapse")
-      .attr("aria-expanded",'false')
-      .attr("style","height:1px");
-  });
-</script>
+    <script>
+      // DataTables 플러그인을 초기화하고, 페이지를 반응형으로 만들기 위해 사이드바 네비게이션 요소를 수정
+      $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+          responsive: true         // 초기화
+        });
+        $(".sidebar-nav") // 작은 화면에서 사이드바 네비게이션을 접히도록
+          .attr("class","sidebar-nav navbar-collapse collapse")
+          .attr("aria-expanded",'false')
+          .attr("style","height:1px");
+      });
+    </script>
 
 </body>
 

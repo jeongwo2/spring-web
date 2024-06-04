@@ -2,9 +2,9 @@
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!-- ex02 register.jsp -->
-<%@include file="../includes/header.jsp"%>
 
+<%@include file="../includes/header.jsp"%>
+<!-- ex02 register.jsp [등록] 페이지-->
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">Board Register</h1>
@@ -12,12 +12,12 @@ pageEncoding="UTF-8"%>
     <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
+<!-- div#게시글 등록 -->
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
 
-            <div class="panel-heading">Board Register</div>
+            <div class="panel-heading">Register[등록]</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
 

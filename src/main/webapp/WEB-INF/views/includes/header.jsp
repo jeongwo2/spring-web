@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!-- ex02 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
 
@@ -70,9 +70,7 @@
                                             <em>Yesterday</em>
                                         </span>
                             </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                                eleifend...
-                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
                         </a>
                     </li>
                     <li class="divider"></li>
@@ -98,9 +96,7 @@
                                             <em>Yesterday</em>
                                         </span>
                             </div>
-                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-                                eleifend...
-                            </div>
+                            <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
                         </a>
                     </li>
                     <li class="divider"></li>

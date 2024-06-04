@@ -34,7 +34,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home";
+		return "home"; // home.html 또는 home.jsp로 매핑
 	}
 	
 }
