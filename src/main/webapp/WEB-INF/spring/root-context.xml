@@ -4,16 +4,19 @@
        xmlns:jdbc="http://www.springframework.org/schema/jdbc"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
-       xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
 <!--src/main/webapp/WEB-INF/spring/root-context.xml: 웹자원과 관련되지 않은 모든 자원의 설정-->
     <!-- ex01: Root Context: defines shared resources visible to all other web components -->
 
-    <!-- ex03:
+    <!-- ex04: 애플리케이션 컨텍스트에서 어노테이션을 사용할 수 있도록   -->
     <context:annotation-config />
-    -->
+
     <!--ex02 DataSource log4jdbc-log4j2 설정-->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
@@ -46,4 +49,8 @@
     <!--ex02  -->
     <context:component-scan base-package="com.example.myweb.service"/>
 
+    <!--ex04 : 패키지 내에서 어노테이션이 있는 클래스를 검색하고, 클래스를 Spring 빈으로 등록 -->
+    <context:component-scan base-package="com.example.myweb.aop"></context:component-scan>
+    <!--AOP: 공통적인 기능(예: 로깅, 트랜잭션 관리)이 코드를 재 사용 -->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
