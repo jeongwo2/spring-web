@@ -20,18 +20,20 @@
         <org.springframework-version>5.2.25.RELEASE</org.springframework-version>
         <spring-security-version>5.2.11.RELEASE</spring-security-version> <!-- 취약점 개선 -->
         <org.aspectj-version>1.9.0</org.aspectj-version>
+        <!-- Apache Log4j2 -->
         <org.slf4j-version>2.0.0</org.slf4j-version>
-        <log4j2-version>2.17.1</log4j2-version>
+        <log4j2-version>2.17.1</log4j2-version> <!-- 2.17.1 보다크면 Could not find artifact -->
         <!-- ORM : Spring-JDBC, MyBatis, HikariCP (커넥션 풀) JDK 8:4.0.3 -->
         <mybatis-version>3.5.9</mybatis-version> <!-- 취약점을 위해 3.5.6 이상 -->
-        <mybatis-spring-version>3.0.0</mybatis-spring-version> <!-- 3.0.0 보다 크면 NamespaceHandler 에러 발생 -->
+        <mybatis-spring-version>3.0.0</mybatis-spring-version> <!-- 3.0.0 보다크면 NamespaceHandler 에러 발생 -->
         <hikaricp-version>4.0.3</hikaricp-version>
         <oracle-version>19.3.0.0</oracle-version>
         <mysql-version>8.0.21</mysql-version>
         <mariadb-version>2.7.0</mariadb-version>
         <!-- JSON 성능: GSON < JSON-SIMPLE < Jackson -->
         <jackson-version>2.15.1</jackson-version>
-        <gson-version>2.9.0</gson-version>
+        <gson-version>2.10.1</gson-version>
+        <quartz-version>2.3.2</quartz-version> <!-- 2.3.2 보다크면 Could not find artifact -->
     </properties>
 
     <dependencies>
@@ -287,14 +289,14 @@
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
-            <version>2.3.2</version>
+            <version>${quartz-version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz-jobs -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz-jobs</artifactId>
-            <version>2.3.2</version>
+            <version>${quartz-version}</version>
         </dependency>
 
         <!-- Spring Security -->
@@ -327,6 +329,26 @@
     <build>
         <defaultGoal>package</defaultGoal>
         <finalName>${project.name}</finalName>
+
+        <resources>
+            <resource>
+                <!-- src/main/java 폴더의 xml 파일들을 빌드에 포함 -->
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <!-- src/main/resources 폴더의 xml, properties, yml, setting 파일들을 빌드에 포함 -->
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                    <include>**/*.yml</include>
+                    <!-- <include>**/*.setting</include>-->
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin> <!-- 2.5.1 -->
                 <groupId>org.apache.maven.plugins</groupId>

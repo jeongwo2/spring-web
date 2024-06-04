@@ -29,6 +29,17 @@
             <param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
+        <!-- ex05: multipart 설정 -->
+        <multipart-config>
+            <!-- 파일이 업로드될 임시 디렉토리 -->
+            <location>C:\\upload\\temp</location>
+            <!-- 파일의 최대 크기: 1MB * 20 -->
+            <max-file-size>20971520</max-file-size>
+            <!-- 요청의 최대 크기: 40MB -->
+            <max-request-size>41943040</max-request-size>
+            <!-- 파일이 디스크에 기록되기 전에 메모리에 보관되는 크기: 20MB  -->
+            <file-size-threshold>20971520</file-size-threshold>
+        </multipart-config>
     </servlet>
 
     <servlet-mapping>
