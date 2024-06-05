@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ReplyServiceImpl implements ReplyService {
    * @param vo The ReplyVO object containing the reply data.
    * @return The number of rows affected by the insert operation.
    */
+  @Transactional // ex03
   @Override
   public int register(ReplyVO vo) {
     log.info("register......" + vo);
@@ -58,6 +60,7 @@ public class ReplyServiceImpl implements ReplyService {
    * @param vo The ReplyVO object containing the updated reply data.
    * @return The number of rows affected by the update operation.
    */
+  @Transactional // ex03
   @Override
   public int modify(ReplyVO vo) {
     log.info("modify......" + vo);
@@ -70,6 +73,7 @@ public class ReplyServiceImpl implements ReplyService {
    * @param rno The unique identifier of the reply.
    * @return The number of rows affected by the delete operation.
    */
+  @Transactional // ex03
   @Override
   public int remove(Long rno) {
     log.info("remove...." + rno);

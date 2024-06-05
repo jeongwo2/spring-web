@@ -1,5 +1,6 @@
 package com.example.myweb.service;
 
+import com.example.myweb.domain.BoardAttachVO;
 import com.example.myweb.domain.BoardVO;
 import com.example.myweb.domain.Criteria;
 
@@ -24,4 +25,6 @@ public interface BoardService {
 	public int getTotal(Criteria cri);
     // 검색조건
 	public List<BoardVO> getListWithSearch(Criteria cri);
+    //ex05
+	public List<BoardAttachVO> getAttachList(Long bno);
 }

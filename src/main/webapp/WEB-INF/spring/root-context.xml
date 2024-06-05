@@ -5,11 +5,13 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         ">
 <!--src/main/webapp/WEB-INF/spring/root-context.xml: 웹자원과 관련되지 않은 모든 자원의 설정-->
     <!-- ex01: Root Context: defines shared resources visible to all other web components -->
@@ -20,13 +22,11 @@
     <!--ex02 DataSource log4jdbc-log4j2 설정-->
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
         <!-- <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
-            <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"></property> -->
-
+             <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:XE"></property> -->
         <property name="driverClassName"
                   value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="jdbcUrl"
                   value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"/>
-
         <property name="username" value="dev"/>
         <property name="password" value="dev$11g"/>
     </bean>
@@ -36,12 +36,27 @@
           destroy-method="close">
         <constructor-arg ref="hikariConfig" />
     </bean>
-    <!--ex02 SqlSessionFactory 설정 : dataSource 를 참조, mybatis-config.xml 경로설정-->
+    <!--ex02 SqlSessionFactory 설정 : dataSource 를 참조, mybatis-config.xml 경로설정
+      . classpath: = src/main/resources
+    -->
     <bean id="sqlSessionFactory"
           class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
+        <!-- MyBatis 설정:  src/main/resources 주입 -->
         <property name="configLocation" value="classpath:/mybatis-config.xml"/>
+        <!-- MyBatis mapper Location: classpath*:mapper/*Mapper.xml  -->
+        <property name="mapperLocations" value="classpath:com/example/myweb/mapper/*Mapper.xml" />
+        <!-- statement 선언의 오류를 좀 더 빠르게 파악하기 위해서 true 로 설정 -->
+        <property name="failFast" value="true"/>
     </bean>
+    <!-- ex03 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <tx:annotation-driven />
+    <!-- ex03 -->
 
     <!--ex02  -->
     <mybatis-spring:scan base-package="com.example.myweb.mapper" />
@@ -51,6 +66,10 @@
 
     <!--ex04 : 패키지 내에서 어노테이션이 있는 클래스를 검색하고, 클래스를 Spring 빈으로 등록 -->
     <context:component-scan base-package="com.example.myweb.aop"></context:component-scan>
-    <!--AOP: 공통적인 기능(예: 로깅, 트랜잭션 관리)이 코드를 재 사용 -->
+
+    <!--ex05 AOP: 공통적인 기능(예: 로깅, 트랜잭션 관리)이 코드를 재 사용 -->
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+    <!--ex05  -->
+    <context:component-scan base-package="com.example.myweb.task"></context:component-scan>
 </beans>

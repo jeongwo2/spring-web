@@ -344,7 +344,6 @@
                 <includes>
                     <include>**/*.xml</include>
                     <include>**/*.properties</include>
-                    <include>**/*.yml</include>
                     <!-- <include>**/*.setting</include>-->
                 </includes>
             </resource>

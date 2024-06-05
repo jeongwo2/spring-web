@@ -1,7 +1,7 @@
 package com.example.myweb.domain;
 
 import lombok.Data;
-
+import java.util.List;
 import java.util.Date;
 
 //ex02
@@ -14,4 +14,7 @@ public class BoardVO {
   private String writer;
   private Date regdate;
   private Date updateDate;
+
+  //ex04
+  private List<BoardAttachVO> attachList;
 }
