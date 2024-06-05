@@ -34,9 +34,16 @@
     <!-- ex02: base-package 속성 값에 해당하는 패키지 내부의 클래스들을 모두 조사-->
     <context:component-scan base-package="com.example.myweb.controller" />
 
-    <!-- ex05:  -->
+    <!-- ex05: 파일 업로드를 위한 multipartResolver -->
     <beans:bean id="multipartResolver"
-                class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+                class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="defaultEncoding" value="utf-8"></beans:property>
+        <!-- 1024 * 1024 * 10 bytes  10MB -->
+        <beans:property name="maxUploadSize" value="104857560"></beans:property>
+        <!-- 1024 * 1024 * 2 bytes  2MB -->
+        <beans:property name="maxUploadSizePerFile" value="2097152"></beans:property>
+        <beans:property name="uploadTempDir" value ="file:/C:/upload/tmp"></beans:property>
+        <beans:property name="maxInMemorySize" value="10485756"></beans:property>
     </beans:bean>
     <!-- ex06: Spring Security 의 전역 메서드 보안을 구성 -->
     <!-- secured-annotations="enabled" 속성은 @Secured 애너테이션을 활성화합니다.
