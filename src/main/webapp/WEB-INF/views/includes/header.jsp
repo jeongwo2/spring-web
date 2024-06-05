@@ -1,5 +1,7 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <html lang="ko">
+
 <!-- ex02 -->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -388,4 +390,4 @@
 
     <div id="page-wrapper">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/resources/js/jquery.min.js"></script>

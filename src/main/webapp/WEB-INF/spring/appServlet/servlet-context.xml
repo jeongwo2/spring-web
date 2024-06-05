@@ -4,9 +4,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:beans="http://www.springframework.org/schema/beans"
     xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:security="http://www.springframework.org/schema/security"
     xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        ">
 
     <!-- webapp\WEB-INF\spring\appServlet\servlet-context.xml -->
     <!-- servlet-context.xml: Spring MVC 관련 설정만 분리 -->
@@ -35,8 +38,12 @@
     <beans:bean id="multipartResolver"
                 class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
     </beans:bean>
-    <!-- Spring security
+    <!-- ex06: Spring Security 의 전역 메서드 보안을 구성 -->
+    <!-- secured-annotations="enabled" 속성은 @Secured 애너테이션을 활성화합니다.
+         이 애너테이션은 @RolesAllowed 애너테이션과 유사하게 메서드에 역할 기반의
+         보안을 적용할 수 있습니다.
+    -->
     <security:global-method-security
         pre-post-annotations="enabled" secured-annotations="enabled" />
-    -->
+
 </beans:beans>
