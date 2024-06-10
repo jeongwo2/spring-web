@@ -37,78 +37,33 @@
     </Appenders>
     <!-- ALL<TRACE<DEBUG<INFO<WARN<ERROR<FATAL<OFF -->
     <Loggers>
+
+        <Logger name="org.springframework" level="INFO" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <!-- Application Loggers -->
+        <Logger name="com.example.myweb" additivity="false" >
+            <AppenderRef ref="console" level="DEBUG" />
+            <AppenderRef ref="logFile" level="INFO" />
+        </Logger>
+        <!-- iBatis 로거 설정 -->
+        <Logger name="org.apache" additivity="false">
+            <AppenderRef ref="console" level="INFO" />
+            <AppenderRef ref="logFile" level="DEBUG" />
+        </Logger>
+        <Logger name="java.sql" level="DEBUG" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <!-- MyBatis 로거 설정 -->
+        <Logger name="org.mybatis" additivity="false">
+            <AppenderRef ref="console" level="INFO" />
+            <AppenderRef ref="logFile" level="DEBUG" />
+        </Logger>
         <!-- 전체: root, 스프링 프레임워크: org.springframework -->
-        <Root level="INFO" additivity="false"> <!-- additivity=false: 로깅메시지 중복 방지 -->
+        <Root level="DEBUG" > <!-- additivity=false: 로깅메시지 중복 방지 -->
             <AppenderRef ref="logFile"/>
             <AppenderRef ref="console"/>
         </Root>
-
-        <!-- Application Loggers -->
-        <Logger name="com.example.myweb" additivity="false" >
-            <AppenderRef ref="console" level="INFO" />
-            <AppenderRef ref="logFile" level="DEBUG" />
-        </Logger>
-
-        <!-- Spring Framework: 베이스 패키지 구조로 잡아줘야 함 -->
-        <Logger name="org.springframework" additivity="false">
-            <AppenderRef ref="console" level="INFO" />
-            <AppenderRef ref="logFile" level="DEBUG" />
-        </Logger>
-
-        <!-- MyBatis 로거 설정 -->
-        <Logger name="org.mybatis.spring" additivity="false">
-            <AppenderRef ref="console">
-                <Filters>
-                    <!-- 레벨이상의 로그는 허용하고, 그 외의 로그는 거부 -->
-                    <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-                </Filters>
-            </AppenderRef>
-            <AppenderRef ref="logFile">
-                <Filters>
-                    <!-- 레벨이상의 로그는 허용하고, 그 외의 로그는 거부 -->
-                    <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-                </Filters>
-            </AppenderRef>
-        </Logger>
-
-        <!-- JDBC log SQL with timing information, post execution -->
-        <Logger name="jdbc.sqlonly" level="INFO" additivity="false">
-            <AppenderRef ref="logFile"/>  <!-- SQL 문장만 -->
-        </Logger>
-        <!-- ResultSet을 제외한 모든 JDBC 호출 정보 -->
-        <Logger name="jdbc.audit" level="INFO" additivity="false">
-            <AppenderRef ref="logFile"/>
-        </Logger>
-        <!-- ResultSet을 포함한 모든 JDBC 호출 정보 -->
-        <Logger name="jdbc.resultset" level="DEBUG" additivity="false">
-            <AppenderRef ref="logFile"/>
-        </Logger>
-        <!-- SQL 문장과 해당 SQL을 실행하는 데 걸린 시간 정보 -->
-        <Logger name="jdbc.sqltiming" level="DEBUG" >
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="logFile"/>
-        </Logger>
-        <!-- 결과 TABLE 형태로 출력 -->
-        <Logger name="jdbc.resultsettable" level="DEBUG" >
-            <AppenderRef ref="console"/>
-            <AppenderRef ref="logFile"/>
-        </Logger>
-
-        <!-- SQL 문장 로깅 -->
-        <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-        <!-- SQL 파라미터 로깅 -->
-        <Logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" additivity="false">
-            <AppenderRef ref="console"/>
-        </Logger>
-
-        <!-- log4jdbc 로그: DEBUG 레벨의 로그를 콘솔에 출력, LOG4JDBC_NON_STATEMENT 마커가 있는 로그는 출력되지 않음 -->
-        <Logger name="log4jdbc.log4j2" level="DEBUG" additivity="false">
-            <MarkerFilter marker="LOG4JDBC_NON_STATEMENT" onMatch="DENY" onMismatch="NEUTRAL" />
-            <AppenderRef ref="console" />
-        </Logger>
-
     </Loggers>
 
 </Configuration>

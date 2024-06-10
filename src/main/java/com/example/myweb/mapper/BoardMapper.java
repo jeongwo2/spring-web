@@ -2,6 +2,7 @@ package com.example.myweb.mapper;
 
 import com.example.myweb.domain.BoardVO;
 import com.example.myweb.domain.Criteria;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface BoardMapper {
 
 	// 전체조회
+	//@Select("select * from tbl_board where bno > 0")
 	public List<BoardVO> getList();
 
 	// 페이징
@@ -27,6 +29,6 @@ public interface BoardMapper {
 
 	public int update(BoardVO board);
 
-	// 전제건수
+	// part3 전제건수
 	public int getTotalCount(Criteria cri);
 }

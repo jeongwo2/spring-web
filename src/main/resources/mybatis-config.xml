@@ -12,7 +12,7 @@
         <!-- 쿼리에 보내는 파라미터가 null인 경우, 오류가 발생하는 것을 방지 -->
         <setting name="jdbcTypeForNull" value="NULL"/>
         <!-- Apache Log4j2를 콘솔 로그가 안 보이는 경우 -->
-        <setting name="logImpl" value="LOG4J2"/>
+        <setting name="logImpl" value="LOG4J2"/> <!-- log4j log setting  -->
     </settings>
     <!--ex01: root-context.xml - 패키지명 등록-->
     <typeAliases>

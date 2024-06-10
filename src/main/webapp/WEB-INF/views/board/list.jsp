@@ -42,16 +42,13 @@
                             <td>
                                 <c:out value="${board.bno}"/>
                             </td>
-                            <!-- 제목 클릭 시 페이지 이동 -->
-                            <%--
+                            <%-- 제목 클릭 시 페이지 이동
                             <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
                                 <c:out value="${board.title}"/>
                             </a></td>
                             --%>
-
                             <td>
-                                <a class='move' href='<c:out value="${board.bno}"/>'>
-                                    <c:out value="${board.title}"/>
+                                <a class='move' href='<c:out value="${board.bno}"/>'> <c:out value="${board.title}"/>
                                 </a>
                             </td>
                             <td>
@@ -70,7 +67,7 @@
                 <div class='row'>
                     <div class="col-lg-12">
                         <form id='searchForm' action="/board/list" method='get'>
-                            <!-- JSP 의 표현 언어(EL)를 사용하여 조건부 논리를 HTML 속성 안에서 처리 -->
+                            <!-- part3 JSP 의 표현 언어(EL)를 사용하여 조건부 논리를 HTML 속성 안에서 처리 -->
                             <select name="type">
                                 <option value="" ${empty pageMaker.cri.type? "selected" : ""}>-- </option>
                                 <option value="T" ${pageMaker.cri.type eq 'T'? "selected" : ""}>제목 </option>
@@ -155,54 +152,67 @@
 <!-- /.col-lg-12 -->
 </div>
 <!-- /.row -->
-
+<!-- part3 검색이벤트 처리 -->
 <script type="text/javascript">
+    // Document ready function to ensure all DOM elements are fully loaded before executing the script
     $(document).ready(function () {
+        // Get the result value from the server and store it in the 'result' variable
         var result = '<c:out value="${result}"/>';
+
+        // Call the checkModal function with the 'result' parameter
         checkModal(result);
+        // Replace the current state of the history object with an empty object and null URL
         history.replaceState({}, null, null);
 
+        // Function to check and display a modal with a success message
         function checkModal(result) {
             if (result === '' || history.state) {
                 return;
             }
+            // Construct the success message using the 'result' value
             const message = "게시글 " + parseInt(result) + " 번이 등록되었습니다.";
+            // Set the modal body text with the success message
             $(".modal-body").html(message);
+            // Show the modal
             $("#myModal").modal("show");
         }
 
+        // Event handler for the 'regBtn' button click event
         $("#regBtn").on("click", function () {
             self.location = "/board/register";
         });
-
+        // Get the 'actionForm' element
         const actionForm = $("#actionForm");
 
-        $(".paginate_button a").on(
-            "click",
-            function (e) {
-                e.preventDefault();
-                console.log('click');
-                actionForm.find("input[name='pageNum']")
-                    .val($(this).attr("href"));
-                actionForm.submit();
-            });
+        // Event handler for the pagination links click event
+        $(".paginate_button a").on("click", function (e) {
+            e.preventDefault();  // Prevent the default link behavior
+            console.log('click');
 
-        $(".move").on("click", function (e) {
-            e.preventDefault();
-            actionForm
-                .append("<input type='hidden' name='bno' value='"
-                    + $(this).attr(
-                        "href")
-                    + "'>");
-            actionForm.attr("action",
-                "/board/get");
+            // Set the 'pageNum' input value of the 'actionForm' with the href attribute of the clicked link
+            actionForm.find("input[name='pageNum']")
+                .val($(this).attr("href"));
+             // Submit the 'actionForm'
             actionForm.submit();
         });
 
+        // 게시물 조회를 위한 이벤트 처리 추가
+        $(".move").on("click", function (e) {
+            e.preventDefault();
+
+            // Append a hidden input field with the 'bno' name
+            actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>");
+            actionForm.attr("action", "/board/get");
+            // 상세내역화면
+            actionForm.submit();
+        });
+
+        // Get the 'searchForm' element
         var searchForm = $("#searchForm");
 
+        // part3 검색이벤트 처리
         $("#searchForm button").on("click", function (e) {
-
+            // If the selected option in the search type dropdown is empty, show an alert and return false
             if (!searchForm.find("option:selected").val()) {
                 alert("검색종류를 선택하세요");
                 return false;
@@ -212,11 +222,14 @@
                 alert("키워드를 입력하세요");
                 return false;
             }
+            // Set the 'pageNum' input value of the 'searchForm' to '1'
             searchForm.find("input[name='pageNum']").val("1");
+
+            // Prevent the default form submission behavior
             e.preventDefault();
+            // Submit the 'searchForm'
             searchForm.submit();
         });
-
     });
 </script>
 

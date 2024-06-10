@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         ">
 <!--src/main/webapp/WEB-INF/spring/root-context.xml: 웹자원과 관련되지 않은 모든 자원의 설정-->
-    <!-- ex01: Root Context: defines shared resources visible to all other web components -->
+    <!-- part1: Root Context: defines shared resources visible to all other web components -->
 
     <!-- ex04: 애플리케이션 컨텍스트에서 어노테이션을 사용할 수 있도록   -->
     <context:annotation-config />

@@ -67,15 +67,15 @@ public class BoardController {
 	@PostMapping("/register") // 엔드포인트에 대한 HTTP POST 요청을 처리
 	public String register(BoardVO board, RedirectAttributes rttr) {
 
-		log.info("/register ==>[등록] bNo{} " , board.getBno());
+		log.info("/register ==>[등록]board:{} " , board.getBno());
 		// Register the board using the boardService
 		boardService.register(board);
 
-		log.info("Add a flash attribute to the redirect URL bNo{} " , board.getBno());
+		log.info("단 한번만 전송되는 데이터 저장후 전송 bNo:{} " , board.getBno());
 		rttr.addFlashAttribute("result", board.getBno());
 
 		log.info("Redirect to the board list page=>/board/list");
-		return "redirect:/board/list";
+		return "redirect:/board/list"; // 모달창
 	}
 
 	// @GetMapping({ "/get", "/modify" })
@@ -113,9 +113,8 @@ public class BoardController {
 	// return "redirect:/board/list";
 	// }
 
-	/**
+	/** [수정처리] 삭제 후 목록으로 이동
 	 * Handles the HTTP POST request for modifying a board item.
-	 *
 	 * @param board 업데이트할 게시판 항목
 	 * @param cri pagination and search parameters.
 	 * @param rttr 리다이렉트할 때 플래시 속성을 저장
@@ -130,13 +129,14 @@ public class BoardController {
 			rttr.addFlashAttribute("result", "success");
 		}
 		// Add pagination and search parameters to the redirect URL
-		log.info("Add pagination and search parameters  cri{}", cri );
+		log.info("Add pagination and search parameters cri{}", cri );
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getPagePerNum());
+		//part4
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 
-		log.info("Redirect to the board list page=>/board/list");
+		log.info("Redirect to the board list page =>/board/list");
 		return "redirect:/board/list";
 	}
 

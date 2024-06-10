@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>upload Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>upload Form</title>
 </head>
 <body>
 

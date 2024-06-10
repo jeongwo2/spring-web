@@ -16,6 +16,11 @@
         <java-version>11</java-version>
         <maven.compiler-version>3.8.1</maven.compiler-version>
         <build.sourceEncoding>UTF-8</build.sourceEncoding>
+        <!-- 리소스 파일 인코딩 설정 -->
+        <project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
+        <!-- 보고서 출력 인코딩 설정 -->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <!-- Spring-Framework Jul 13, 2023 기준 -->
         <org.springframework-version>5.2.25.RELEASE</org.springframework-version>
         <spring-security-version>5.2.11.RELEASE</spring-security-version> <!-- 취약점 개선 -->
@@ -72,6 +77,14 @@
         </dependency>
 
         <!-- Logging Library: log4j->Slf4j-> logback-> log4j2 ====-->
+        <!-- log4j 의존성 제거 -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>runtime</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -96,7 +109,7 @@
             <version>1.4.14</version>
         </dependency>
         -->
-        <!-- Apache Log4j2 의존성 취약점 업데이트 -->
+        <!-- Apache log4j2 의존성 추가 -->
         <!-- Log4j2 버전은 2.13.3 이상으로  -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -369,6 +382,15 @@
                 <version>3.2.0</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <encoding>${build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>

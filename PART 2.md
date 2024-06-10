@@ -1,6 +1,6 @@
 ## Part2 
 
-◼ Servlete 은 3.0 이상으로 변경
+◼ Servlet 은 3.0 이상으로 변경
 ```bazaar
         <!-- 서블릿 API 4.0 : web.xml 의 버전과 매핑  -->
         <dependency>
@@ -10,10 +10,12 @@
             <scope>provided</scope>
         </dependency>
 ```
-◼ Context root 변경  
-/
+◼ Context root / 로 변경
+  localhost:8080 + contextPath
+
 - Tomcat 의 경우  
-  <img alt="img_2.png" height="80" src="img_2.png" width="320"/>
+  - Properties> Web Project Settings
+  - server.xml 의 Context path 의 값을 변경
 
 - IntelliJ 의 경우  
 ![img_3.png](img_3.png)
@@ -73,4 +75,12 @@
     <beans:property name="maxInMemorySize" value="10485756"></beans:property>
 </beans:bean> 
 ```
+
+
+
+
+            
+                        
+                                           
+                                                    
 

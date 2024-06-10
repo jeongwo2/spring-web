@@ -4,19 +4,24 @@ import com.example.myweb.domain.BoardVO;
 import com.example.myweb.domain.Criteria;
 import com.example.myweb.mapper.BoardMapper;
 import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.assertNotNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Log4j2
 public class BoardServiceTest {
+
+    private static final Logger log = LoggerFactory.getLogger(BoardServiceTest.class);
 
     @Setter(onMethod_ = { @Autowired})
     private BoardService service;
@@ -27,15 +32,16 @@ public class BoardServiceTest {
     @Test
     public void testExist() {
 
-        log.info(service);
+        log.info(String.valueOf(service));
         assertNotNull(service);
     }
 
     @Test
     public void testGetList() {
 
-        service.getList().forEach(board -> log.info(board));
+        service.getList().forEach(board -> log.info(board.toString()));
     }
+
 
     @Test
     public void testRegister() {
@@ -55,7 +61,7 @@ public class BoardServiceTest {
         {
             log.error(e.getMessage());
         }
-        log.info("생성된 게시물의 번호: " + bno);
+        log.info("생성된 게시물의 번호 {} " , bno);
     }
 
     @Test
@@ -72,21 +78,30 @@ public class BoardServiceTest {
         bno = board.getBno();
         if ( bno > 1 )
         {
-            log.info("생성된 게시물의 번호: " + bno);
+            log.info("생성된 게시물의 번호:{} " , bno);
         }
     }
 
+    @Test
+    public void testSearch() {
+        Criteria cri = new Criteria();
+        cri.setKeyword("새로");
+        cri.setType("TC");
+
+        List<BoardVO> list = boardMapper.getListWithPaging(cri);
+        list.forEach(board -> log.info(board.toString()));
+    }
 
     @Test
     public void testGetListWithPaging() {
 
-        service.getListWithPaging(new Criteria(2, 10)).forEach(board -> log.info(board));
+        service.getListWithPaging(new Criteria(2, 10)).forEach(board -> log.info(board.toString()));
     }
 
     @Test
     public void testGet() {
 
-        log.info(service.get(1L));
+        log.info(String.valueOf(service.get(1L)));
     }
 
     @Test

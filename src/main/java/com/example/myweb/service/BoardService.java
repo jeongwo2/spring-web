@@ -18,13 +18,13 @@ public interface BoardService {
 	public boolean remove(Long bno);
 
 	public List<BoardVO> getList();
-
+	//part3 페이징
 	public List<BoardVO> getListWithPaging(Criteria cri);
 
-	//추가
+	//part3 게시물의 갯수
 	public int getTotal(Criteria cri);
-    // 검색조건
+    //part4 검색조건
 	public List<BoardVO> getListWithSearch(Criteria cri);
-    //ex05
+    //part5 ex05
 	public List<BoardAttachVO> getAttachList(Long bno);
 }

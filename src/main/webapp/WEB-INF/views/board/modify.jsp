@@ -2,6 +2,8 @@
 pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!-- ex06 security -->
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <!-- ex02 modify.jsp : [수정/삭제] 페이지 -->
 <%@include file="../includes/header.jsp"%>
 
@@ -70,10 +72,16 @@ pageEncoding="UTF-8"%>
             <div class="panel-body">
                 <!-- Form to modify the board -->
                 <form role="form" action="/board/modify" method="post">
-                    <!-- Hidden inputs for page number, amount, type, keyword, and board number -->
+                    <!-- Hidden inputs for page number, amount, type, keyword, and board number
                     <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
                     <input type='hidden' name='amount' value='<c:out value="${cri.pagePerNum }"/>'>
                     <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
+                    <input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
+                    ex06 -->
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+                    <input type='hidden' name='amount' 	value='<c:out value="${cri.pagePerNum }"/>'>
+                    <input type='hidden' name='type'    value='<c:out value="${cri.type }"/>'>
                     <input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
 
                     <div class="form-group">
@@ -109,12 +117,21 @@ pageEncoding="UTF-8"%>
                                value='<fmt:formatDate pattern = "yyyy/MM/dd" value = "${board.updateDate}" />'
                                readonly="readonly">
                     </div>
-                    <!-- Buttons for modifying, removing, and returning to the list -->
+                    <!-- Buttons for modifying, removing, and returning to the list
                     <button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
                     <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
+                    -->
+                    <!-- ex06 -->
+                    <sec:authentication property="principal" var="pinfo" />
+                    <sec:authorize access="isAuthenticated()">
+                        <c:if test="${pinfo.username eq board.writer}">
+
+                            <button type="submit" data-oper='modify' class="btn btn-default">Modify</button>
+                            <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
+                        </c:if>
+                    </sec:authorize>
                     <button type="submit" data-oper='list' class="btn btn-info">List</button>
                 </form>
-
             </div>
             <!--  end panel-body -->
         </div>
@@ -154,14 +171,15 @@ pageEncoding="UTF-8"%>
 <!-- /.row -->
 
 
-<!--ex02 jQuery: 첨부파일 원본 이미지 보기 -->
+<!--ex03 jQuery: 게시물의 수정/삭제 -->
 <script type="text/javascript">
     $(document).ready(function() {
-          // 즉시 실행 함수를 이용해서 첨부파일 목록 가져오기
-          var formObj = $("form");
-          // Event handler for form buttons
-          $('button').on("click", function(e){
+        // 즉시 실행 함수를 이용해서 첨부파일 목록 가져오기
+        var formObj = $("form");
+        // Event handler for form buttons
+        $('button').on("click", function(e){
             e.preventDefault();
+
             var operation = $(this).data("oper");
             console.log(operation);
 
@@ -170,27 +188,42 @@ pageEncoding="UTF-8"%>
               formObj.attr("action", "/board/remove");
             }else if(operation === 'list'){
               // Move to list
-              formObj.attr("action", "/board/list").attr("method","get");
+                formObj.attr("action", "/board/list").attr("method","get");
 
               // Clone and append hidden inputs for page number, amount, type, and keyword
-              var pageNumTag = $("input[name='pageNum']").clone();
-              var amountTag = $("input[name='amount']").clone();
-              var keywordTag = $("input[name='keyword']").clone();
-              var typeTag = $("input[name='type']").clone();
+                var pageNumTag = $("input[name='pageNum']").clone();
+                var amountTag = $("input[name='amount']").clone();
+                var keywordTag = $("input[name='keyword']").clone();
+                var typeTag = $("input[name='type']").clone();
 
-              formObj.empty();
+                formObj.empty();
 
-              formObj.append(pageNumTag);
-              formObj.append(amountTag);
-              formObj.append(keywordTag);
-              formObj.append(typeTag);
+                formObj.append(pageNumTag);
+                formObj.append(amountTag);
+                formObj.append(keywordTag);
+                formObj.append(typeTag);
+                <!-- ex06 -->
+            }else if(operation === 'modify'){
+                console.log("submit clicked");
+                var str = "";
+
+                $(".uploadResult ul li").each(function(i, obj){
+                    var jobj = $(obj);
+                    console.dir(jobj);
+                    str += "<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+                    str += "<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+                    str += "<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+                    str += "<input type='hidden' name='attachList["+i+"].fileType' value='"+ jobj.data("type")+"'>";
+	            });
+	            formObj.append(str).submit();
             }
             formObj.submit();
-          });
+        });
     });
 </script>
+<!--ex03 jQuery: 게시물의 수정/삭제 -->
 
-<!-- ex05: jQuery 첨부파일 원본 이미지 보기  -->
+<!-- ex05 jQuery: 첨부파일 원본 이미지 보기  -->
 <script>
     $(document).ready(function() {
       (function(){
@@ -267,6 +300,9 @@ pageEncoding="UTF-8"%>
         }
         return true;
       }
+      <!-- ex06 -->
+      var csrfHeaderName ="${_csrf.headerName}";
+      var csrfTokenValue="${_csrf.token}";
 
       // Event listener for the file input field
       $("input[type='file']").change(function(e){
@@ -282,17 +318,18 @@ pageEncoding="UTF-8"%>
           }
           formData.append("uploadFile", files[i]);
         }
+
         // Send an AJAX request to upload the files
         $.ajax({
-          url: '/uploadAjaxAction',
-          processData: false,
-          contentType: false,data:
-          formData,type: 'POST',
-          dataType:'json',
+            url: '/uploadAjaxAction',
+            processData: false,
+            contentType: false,data:
+            formData,type: 'POST',
+            dataType:'json',
             success: function(result){
               console.log(result);
               showUploadResult(result); //업로드 결과 처리 함수
-          }
+            }
         }); //$.ajax
       });
 
@@ -340,7 +377,6 @@ pageEncoding="UTF-8"%>
         uploadUL.append(str);
       }
     });
-
 </script>
 
 <%@include file="../includes/footer.jsp"%>
