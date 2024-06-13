@@ -16,7 +16,7 @@
 <!--src/main/webapp/WEB-INF/spring/root-context.xml: 웹자원과 관련되지 않은 모든 자원의 설정-->
     <!-- part1: Root Context: defines shared resources visible to all other web components -->
 
-    <!-- ex04: 애플리케이션 컨텍스트에서 어노테이션을 사용할 수 있도록   -->
+    <!-- part5: 애플리케이션 컨텍스트에서 어노테이션을 사용할 수 있도록   -->
     <context:annotation-config />
 
     <!--ex02 DataSource log4jdbc-log4j2 설정-->
@@ -49,13 +49,14 @@
         <!-- statement 선언의 오류를 좀 더 빠르게 파악하기 위해서 true 로 설정 -->
         <property name="failFast" value="true"/>
     </bean>
-    <!-- ex03 -->
+    <!-- part5 트랜잭션 설정 추가 -->
     <bean id="transactionManager"
           class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
 
     <tx:annotation-driven />
+
     <!-- ex03 -->
 
     <!--ex02  -->
@@ -64,10 +65,10 @@
     <!--ex02  -->
     <context:component-scan base-package="com.example.myweb.service"/>
 
-    <!--ex04 : 패키지 내에서 어노테이션이 있는 클래스를 검색하고, 클래스를 Spring 빈으로 등록 -->
+    <!--part5 AOP: 패키지 내에서 어노테이션이 있는 클래스를 검색하고, 클래스를 Spring 빈으로 등록 -->
     <context:component-scan base-package="com.example.myweb.aop"></context:component-scan>
 
-    <!--ex05 AOP: 공통적인 기능(예: 로깅, 트랜잭션 관리)이 코드를 재 사용 -->
+    <!--part5 AOP: 공통적인 기능(예: 로깅, 트랜잭션 관리)이 코드를 재 사용 -->
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
     <!--ex05  -->

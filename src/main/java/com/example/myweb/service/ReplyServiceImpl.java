@@ -1,18 +1,21 @@
 package com.example.myweb.service;
 
-import com.example.myweb.domain.Criteria;
-import com.example.myweb.domain.ReplyPageDTO;
-import com.example.myweb.domain.ReplyVO;
-import com.example.myweb.mapper.ReplyMapper;
+
+import com.example.myweb.mapper.BoardMapper;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.myweb.domain.Criteria;
+import com.example.myweb.domain.ReplyPageDTO;
+import com.example.myweb.domain.ReplyVO;
+import com.example.myweb.mapper.ReplyMapper;
+
 import java.util.List;
 
-/**
+/** part4 댓글
  * This class implements the ReplyService interface and provides methods for managing reply data.
  * It uses the ReplyMapper interface to interact with the database.
  *
@@ -28,6 +31,8 @@ public class ReplyServiceImpl implements ReplyService {
    * The ReplyMapper interface for database operations.
    */
   private ReplyMapper replyMapper;
+  // part5
+  private BoardMapper boardMapper;
 
   /**
    * Registers a new reply in the database.
@@ -35,10 +40,13 @@ public class ReplyServiceImpl implements ReplyService {
    * @param vo The ReplyVO object containing the reply data.
    * @return The number of rows affected by the insert operation.
    */
-  @Transactional // ex03
+  @Transactional // part5 트랙잭션 추가
   @Override
   public int register(ReplyVO vo) {
-    log.info("register......" + vo);
+    log.info("register.....vo:{}" , vo);
+    // part5 댓글과 트랙잭션 설정 추가
+    boardMapper.updateReplyCnt(vo.getBno(), 1);
+
     return replyMapper.insert(vo);
   }
 
@@ -60,23 +68,27 @@ public class ReplyServiceImpl implements ReplyService {
    * @param vo The ReplyVO object containing the updated reply data.
    * @return The number of rows affected by the update operation.
    */
-  @Transactional // ex03
+  @Transactional // part5 트랙잭션 추가
   @Override
   public int modify(ReplyVO vo) {
-    log.info("modify......" + vo);
+    log.info("modify...vo:{}" , vo);
     return replyMapper.update(vo);
   }
 
-  /**
+  /** ex03
    * Removes a reply from the database by its unique identifier.
    *
    * @param rno The unique identifier of the reply.
    * @return The number of rows affected by the delete operation.
    */
-  @Transactional // ex03
+  @Transactional // part5
   @Override
   public int remove(Long rno) {
-    log.info("remove...." + rno);
+    log.info("remove...rno:{}" , rno);
+    // part5 댓글과 트랙잭션 설정 추가
+    ReplyVO vo = replyMapper.read(rno);
+    log.info("remove...vo:{}" , vo);
+    boardMapper.updateReplyCnt(vo.getBno(), -1);
     return replyMapper.delete(rno);
   }
 
