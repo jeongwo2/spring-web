@@ -1,13 +1,13 @@
 console.log("Reply Module........");
 
 var replyService = (function() {
-
+    //  AJAX 요청을 사용하여 새로운 댓글을 추가합니다.
 	function add(reply, callback, error) {
 		console.log("add reply...............");
 
 		$.ajax({
 			type : 'post',
-			url : '/replies/new',
+			url : '/replies/new',  // Ajax 로 ReplyController 호출
 			data : JSON.stringify(reply),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
@@ -40,29 +40,28 @@ var replyService = (function() {
 //		});
 //	}
 
-
+    // part4 댓글의 페이지 계산과 출력
 	function getList(param, callback, error) {
 
 	    var bno = param.bno;
 	    var page = param.page || 1;
-	    
+	    // Ajax 로 ReplyController 호출
 	    $.getJSON("/replies/pages/" + bno + "/" + page + ".json",
 	        function(data) {
-	    	
 	          if (callback) {
 	            //callback(data); // 댓글 목록만 가져오는 경우 
 	            callback(data.replyCnt, data.list); //댓글 숫자와 목록을 가져오는 경우 
 	          }
 	        }).fail(function(xhr, status, err) {
 	      if (error) {
-	        error();
+	         error();
 	      }
 	    });
-	  }
-
+	}
+    // 댓글의 삭제와 갱신
 	function remove(rno, callback, error) {
 		$.ajax({
-			type : 'delete',
+			type : 'delete',   // 전송방식은 DELETE 방식 사용
 			url : '/replies/' + rno,
 			success : function(deleteResult, status, xhr) {
 				if (callback) {
@@ -76,16 +75,15 @@ var replyService = (function() {
 			}
 		});
 	}
-
+    // 댓글 수정
 	function update(reply, callback, error) {
-
 		console.log("RNO: " + reply.rno);
 
 		$.ajax({
-			type : 'put',
+			type : 'put',  // PUT 방식으로 호출
 			url : '/replies/' + reply.rno,
 			data : JSON.stringify(reply),
-			contentType : "application/json; charset=utf-8",
+			contentType : "application/json; charset=utf-8", // 전달하는 데이터는 JSON 데이터
 			success : function(result, status, xhr) {
 				if (callback) {
 					callback(result);
@@ -98,7 +96,7 @@ var replyService = (function() {
 			}
 		});
 	}
-
+    // 특정댓글 조회
 	function get(rno, callback, error) {
 
 		$.get("/replies/" + rno + ".json", function(result) {
@@ -138,9 +136,8 @@ var replyService = (function() {
 			return [ yy, '/', (mm > 9 ? '' : '0') + mm, '/',
 					(dd > 9 ? '' : '0') + dd ].join('');
 		}
-	}
-	;
-
+	} ;
+    // 모듈 패턴으로 외부에 노출하는 정보
 	return {
 		add : add,
 		get : get,

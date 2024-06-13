@@ -5,7 +5,7 @@ import com.example.myweb.domain.ReplyPageDTO;
 import com.example.myweb.domain.ReplyVO;
 
 import java.util.List;
-/**
+/** part3
  * This interface defines the contract for the Reply Service.
  * It provides methods for managing replies in a web application.
  *
@@ -22,7 +22,7 @@ public interface ReplyService {
 	public int modify(ReplyVO vo);
 
 	public int remove(Long rno);
-
+	// part4 댓글의 숫자와 댓글 목록을 처리
 	public List<ReplyVO> getList(Criteria cri, Long bno);
 	
 	public ReplyPageDTO getListPage(Criteria cri, Long bno);

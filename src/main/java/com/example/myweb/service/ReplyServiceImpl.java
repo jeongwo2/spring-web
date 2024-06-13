@@ -93,7 +93,7 @@ public class ReplyServiceImpl implements ReplyService {
     return replyMapper.getListWithPaging(cri, bno);
   }
 
-  /**
+  /** part4 댓글의 숫자와 댓글 목록을 처리
    * Retrieves a paged list of replies for a specific board, based on the given criteria.
    *
    * @param cri The Criteria object containing the pagination and sorting parameters.

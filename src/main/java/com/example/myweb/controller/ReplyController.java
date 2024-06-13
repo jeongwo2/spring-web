@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-/**
+/** part4 Ajax 를 이용하는 댓글 처리
  * Controller for handling reply-related operations.
  *
  * @author YourName
@@ -34,19 +34,21 @@ public class ReplyController {
     private ReplyService replyService;
 
     /**[댓글등록]
-     * Registers a new reply.
+     * 브라우저에서는 JSON 타입으로 된 댓글 데이터를 전송-> 서버에서는 댓글의 처리 결과를 반환
      *
      * @param reply The reply to be registered.
      * @return ResponseEntity with "success" if registration is successful, otherwise returns an error status.
      */
-    @PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+    @PostMapping(value = "/new",
+            consumes = "application/json",
+            produces = { MediaType.TEXT_PLAIN_VALUE })
     public ResponseEntity<String> create(@RequestBody ReplyVO reply) {
 
         log.info("/new [댓글등록] reply {} ", reply);
 
         // Count of rows inserted into the database
         int insertCount = replyService.register(reply);
-        log.info("Count of rows inserted: " + insertCount);
+        log.info("Count of rows inserted [count] {} " , insertCount);
 
         // Return success response if exactly one row was inserted
         // Otherwise, return an error response
@@ -54,7 +56,7 @@ public class ReplyController {
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /**[댓글검색]
+    /**[댓글검색] 댓글의 조회
      * Retrieves a reply by its unique identifier.
      *
      * @param rno The unique identifier of the reply.
@@ -76,9 +78,10 @@ public class ReplyController {
      * @param rno The unique identifier of the reply.
      * @return ResponseEntity with "success" if modification is successful, otherwise returns an error status.
      */
-    @RequestMapping(method = { RequestMethod.PUT,
-            RequestMethod.PATCH }, value = "/{rno}", consumes = "application/json", produces = {
-            MediaType.TEXT_PLAIN_VALUE })
+    @RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH },
+            value = "/{rno}",
+            consumes = "application/json",
+            produces = {MediaType.TEXT_PLAIN_VALUE })
     public ResponseEntity<String> modify(
             @RequestBody ReplyVO reply,
             @PathVariable("rno") Long rno) {
@@ -107,21 +110,22 @@ public class ReplyController {
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    /**[페이징하여 댓글 검색 ]
+    /** part4 [페이징하여 댓글 검색 ] 특정 게시물의 댓글 목록
      * Retrieves a list of replies for a specific board post, paginated.
      *
      * @param page The page number.
      * @param bno The unique identifier of the board post.
      * @return ResponseEntity with the paginated list of replies if found, otherwise returns an error status.
+     * example: http://localhost:8081/replies/pages/1/123
      */
-    @GetMapping(value = "/pages/{bno}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
-            MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "/pages/{bno}/{page}",
+            produces = { MediaType.APPLICATION_XML_VALUE,  // XML 과 JSON 타입으로 서비스
+                         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page") int page, @PathVariable("bno") Long bno) {
 
-        log.info("고유 식별자로 페이징하여 댓글 검색 page{}, bno{} ", page, bno);
+        log.info("고유 식별자로 페이징하여 댓글 검색 page={}, bno={} ", page, bno);
 
         Criteria cri = new Criteria(page, 10);
-
         log.info("페이징 Criteria{} ", cri);
 
         return new ResponseEntity<>(replyService.getListPage(cri, bno), HttpStatus.OK);

@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 
-//ex03
+//part4 Ajax 를 이용하는 댓글 처리
 @Data
 public class ReplyVO {
 

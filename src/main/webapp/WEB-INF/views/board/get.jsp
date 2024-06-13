@@ -172,13 +172,14 @@ pageEncoding="UTF-8"%>
                     <button id='addReplyBtn' class='btn btn-primary btn-xs pull-right'>New Reply[새글]</button>
                 </sec:authorize> <!--ex06 -->
             </div>
-            <!-- /.panel-heading -->
+            <!-- part4 댓글의 페이지 번호 처리 -->
+            <!-- /.panel-heading 기존에 존재하는 부분 -->
             <div class="panel-body">
                 <ul class="chat">
                 </ul>
                 <!-- ./ end ul -->
             </div>
-            <!-- /.panel .chat-panel -->
+            <!-- /.panel .chat-panel 기존에 존재하는 부분 -->
             <div class="panel-footer"></div>
         </div>
     </div>
@@ -249,9 +250,9 @@ pageEncoding="UTF-8"%>
 </script>
 <!--ex02 javascript -->
 
-<!-- ex03 reply ==============================================================-->
+<!-- part4 ex03 조회 화면에서 reply 호출 ==============================================================-->
 <script type="text/javascript" src="/resources/js/reply.js"></script>
-<!-- ex03 ./reply ============================================================-->
+<!-- part4 ex03 ./reply ============================================================-->
 
 <!-- ex03 jQuery 게시판 세부 페이지에서 댓글 기능 -->
 <script>
@@ -260,12 +261,12 @@ pageEncoding="UTF-8"%>
         var replyUL = $(".chat"); // HTML 요소 .chat 을 선택하여 댓글 목록을 표시
 
         showList(1); // 첫 페이지의 댓글을 초기 표시
-        // 서버에서 댓글 목록을 가져오고 HTML 로 구성
+
+        // 서버에서 댓글 목록을 가져온후 <li>태그를 만들어서 화면에 보여준다.
         function showList(page){
             console.log("show list " + page);
-            // 서버에서 댓글 목록을 가져오고, HTML 로 구성합니다.
-            replyService.getList({bno:bnoValue,page: page|| 1
-            }, function(replyCnt, list) {
+            // 서버에서 댓글 목록을 가져오기
+            replyService.getList({bno:bnoValue, page: page|| 1}, function(replyCnt, list) {
                 console.log("replyCnt: " + replyCnt);
 
                 if (page == -1) {
@@ -278,9 +279,9 @@ pageEncoding="UTF-8"%>
                 if (list == null || list.length == 0) {
                     return;
                 }
-                // Loop through the list of replies and create HTML for each reply
+                // 게시글의 댓글을 <li>태그를 만들어서 화면에 보여준다.
                 for (var i = 0, len = list.length || 0; i < len; i++) {
-                    str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>";
+                    str += "<li class='left clearfix' data-rno='" + list[i].rno + "'>"; // 수정이나 삭제 시에는 반드시 댓글의 번호(rno)가 필요
                     str += "  <div><div class='header'><strong class='primary-font'>["
                         +  list[i].rno + "] " + list[i].replyer + "</strong>";
                     str += "    <small class='pull-right text-muted'>"
@@ -390,30 +391,31 @@ pageEncoding="UTF-8"%>
         xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
     });
 
-    // 새 댓글을 서버에 저장하기 위한 등록 이벤트 리스너
+    // part4 새 댓글을 추가 후 서버에 저장하기 위한 등록 이벤트 리스너
     modalRegisterBtn.on("click", function(e) {
         var reply = {
             reply: modalInputReply.val(),
             replyer: modalInputReplyer.val(),
             bno: bnoValue
         };
-         // Call the add function from the replyService
+         // 새로운 댓글을 추가하면 page 값을 -1로 전송하고, 댓글의 전체 숫자를 파악한 후에 페이지 이동
         replyService.add(reply, function(result) {
-              alert(result);
+            console.log(result);
 
-              modal.find("input").val("");
-              modal.modal("hide");
-              // Refresh the reply list
-              showList(-1);
+            modal.find("input").val("");
+            modal.modal("hide");
+            // Refresh the reply list
+            showList(-1);  // page 값을 -1로 전송
         });
     });
     // modalRegisterBtn end
 
-    // 댓글을 클릭하여 세부 정보를 모달 창에 표시하기 위한 이벤트 리스너
+    // 댓글 조회를 클릭하여 세부 정보를 모달 창에 표시하기 위한 이벤트 리스너
     $(".chat").on("click", "li", function(e) {
         var rno = $(this).data("rno");
-
+        // 특정댓글 조회
         replyService.get(rno, function(reply) {
+            console.log(reply);
             // Set the reply and replyer values in the modal
             modalInputReply.val(reply.reply);
             modalInputReplyer.val(reply.replyer);
@@ -451,9 +453,9 @@ pageEncoding="UTF-8"%>
              modal.modal("hide");
              return;
         }
-        // 수정
+        // 댓글 수정
         replyService.update(reply, function(result) {
-            alert(result);
+            console.log(result);
 
             modal.modal("hide");
             showList(pageNum);
@@ -476,9 +478,9 @@ pageEncoding="UTF-8"%>
          modal.modal("hide");
          return;
       }
-
+      // 존재하는 댓글의 번호를 이용해서 처리
       replyService.remove(rno, function(result) {
-        alert(result);
+        console.log(result);
 
         modal.modal("hide");
         showList(pageNum);

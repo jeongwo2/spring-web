@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- ex03 -->
+<!-- part4 Ajax 를 이용하는 댓글 처리 -->
 <mapper namespace="com.example.myweb.mapper.ReplyMapper">
 
     <insert id="insert">
@@ -59,7 +59,7 @@
 		]]>
 
     </select>
-
+    <!--part4 댓글 페이징을 위한 숫자 파악 -->
     <select id="getCountByBno" resultType="int">
         <![CDATA[
 		select count(rno) from tbl_reply where bno = #{bno}
