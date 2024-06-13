@@ -15,6 +15,6 @@ public class BoardVO {
   private Date regdate;
   private Date updateDate;
 
-  //ex04
+  // Part6 여러 개의 첨부 파일을 가지도록
   private List<BoardAttachVO> attachList;
 }

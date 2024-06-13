@@ -5,7 +5,7 @@
     <title>upload Form</title>
 </head>
 <body>
-
+<!-- part6 파일업로드 -->
 <form action="uploadFormAction" method="post" enctype="multipart/form-data">
     <input type='file' name='uploadFile' multiple>
     <button>Submit</button>

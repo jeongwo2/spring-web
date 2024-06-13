@@ -48,17 +48,18 @@ public class BoardServiceImpl implements BoardService {
 	 * @param board The board object to be registered.
 	 * @throws RuntimeException If any error occurs during the database operation.
 	 */
-	@Transactional // ex03
+	@Transactional // Part6
 	@Override
 	public void register(BoardVO board) {
 
 		log.info("register......{}", board);
 
 		boardMapper.insertSelectKey(board);
-		//ex04
+		// Part4
 		if (board.getAttachList() == null || board.getAttachList().size() <= 0) {
 			return;
 		}
+		// Part6 트랜잭션하에 여러 개의 첨부 파일 정보도 DB에 저장
 		board.getAttachList().forEach(attach -> {
 			attach.setBno(board.getBno());
 			attachMapper.insert(attach);

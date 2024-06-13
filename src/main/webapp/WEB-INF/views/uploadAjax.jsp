@@ -76,12 +76,10 @@
 
     <!-- Rest of the JavaScript code -->
 	<script>
-	// 큰 이미지를 표시하는 함수
+	// Part6 큰 이미지를 표시하는 함수
 	function showImage(fileCallPath){
 		//alert(fileCallPath);
-		$(".bigPictureWrapper")
-			.css("display","flex")
-			.show();
+		$(".bigPictureWrapper").css("display","flex").show();
 		$(".bigPicture")
 			.html("<img src='/display?fileName="+ encodeURI(fileCallPath)+"'>")
 			.animate({width:'100%', height: '100%'}, 1000);
@@ -115,11 +113,10 @@
 		}); //$.ajax
 	});
 
-
     // 파일 업로드 폼을 초기화
 	var cloneObj = $(".uploadDiv").clone();
 
-    // 업로드된 파일 목록을 HTML li 요소로 생성
+    // part6 업로드된 파일 목록을 HTML li 요소로 생성
 	$("#uploadBtn").on("click", function(e) {
 		var formData = new FormData();
 		var formData = new FormData();
@@ -133,18 +130,8 @@
 			}
 			formData.append("uploadFile", files[i]);
 		}
-
-		/*   $.ajax({
-			url: '/uploadAjaxAction',
-			processData: false,
-			contentType: false,
-			data: formData,
-			type: 'POST',
-			success: function(result){
-			alert("Uploaded");
-			}
-		}); //$.ajax */
-
+        // Part6 jQuery 를 이용한 파일 전송
+        // Ajax 를 이용하는 경우에는 FormData 객체를 이용
 		$.ajax({
 			url : '/uploadAjaxAction',
 			processData : false,
@@ -154,7 +141,7 @@
 			dataType : 'json',
 			success : function(result) {
 				console.log(result);
-				showUploadedFile(result);
+				showUploadedFile(result); // 브라우저에서 Ajax 의 처리
 				$(".uploadDiv").html(cloneObj.html());
 			}
 		}); //$.ajax
@@ -162,7 +149,7 @@
     // Variable to store the ul element where uploaded file information will be displayed
 	var uploadResult = $(".uploadResult ul");
 
-    // 업로드된 파일 목록을 HTML li 요소로 생성
+    // Part6 업로드된 파일 목록을 HTML li 요소로 생성
 	function showUploadedFile(uploadResultArr){
 		var str = "";
 
@@ -190,8 +177,9 @@
 		uploadResult.append(str);
 	}
 
-     // 파일 확장자와 크기를 validate 하는 함수
+     // Part6 파일 확장자와 크기를 validate 하는 함수
 	function checkExtension(fileName, fileSize) {
+	    // Part6 파일의 확장자나 크기 사전처리
         var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	    var maxSize = 5242880; //5MB
 		if (fileSize >= maxSize) {

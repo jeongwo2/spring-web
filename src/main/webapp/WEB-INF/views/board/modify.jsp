@@ -319,7 +319,7 @@ pageEncoding="UTF-8"%>
           formData.append("uploadFile", files[i]);
         }
 
-        // Send an AJAX request to upload the files
+        // Send an AJAX request to upload the files- Part6 jQuery 를 이용한 파일 전송
         $.ajax({
             url: '/uploadAjaxAction',
             processData: false,

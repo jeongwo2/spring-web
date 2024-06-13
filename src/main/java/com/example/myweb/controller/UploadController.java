@@ -51,9 +51,9 @@ public class UploadController {
         log.info("upload form");
     }
 
-    /**
+    /** part 6 업로드 파일 Multipart 타입
      * Handles file uploads from the form.
-     *
+     * 업로드되는 파일 데이터 처리에 사용
      * @param uploadFile the uploaded files
      * @param model the model for rendering views
      */
@@ -62,14 +62,14 @@ public class UploadController {
         String uploadFolder = "C:\\upload";
 
         for (MultipartFile multipartFile : uploadFile) {
-            log.info("-------------------------------------");
-            log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-            log.info("Upload File Size: " + multipartFile.getSize());
+            log.info("파라미터의 이름 :{} " , multipartFile.getName()); // 파라미터의 이름 <input> 태그의 이름
+            log.info("업로드되는 파일의 이름:{} " , multipartFile.getOriginalFilename()); // 업로드되는 파일의 이름
+            log.info("업로드되는 파일의 크기:{} " , multipartFile.getSize()); // 업로드되는 파일의 크기
 
             File saveFile = new File(uploadFolder, multipartFile.getOriginalFilename());
 
             try {
-                multipartFile.transferTo(saveFile);
+                multipartFile.transferTo(saveFile); // 파일의 저장
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
@@ -84,7 +84,7 @@ public class UploadController {
         log.info("upload ajax");
     }
 
-    /**
+    /**Part6 파일 처리
      * Handles file uploads using AJAX.
      *
      * @param uploadFile the uploaded files
@@ -96,7 +96,7 @@ public class UploadController {
     public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
         List<AttachFileDTO> list = new ArrayList<>();
         String uploadFolder = "C:\\upload";
-
+        // Part6 파일 처리
         String uploadFolderPath = getFolder();
         File uploadPath = new File(uploadFolder, uploadFolderPath);
         // add
@@ -104,11 +104,11 @@ public class UploadController {
             log.error("Failed to create directory: {}", uploadPath);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-/*        if (!uploadPath.exists()) {
+        /*
+        if (!uploadPath.exists()) {
             uploadPath.mkdirs();
         }
         */
-
         for (MultipartFile multipartFile : uploadFile) {
             AttachFileDTO attachDTO = new AttachFileDTO();
 
@@ -124,7 +124,7 @@ public class UploadController {
 
                 attachDTO.setUuid(uuid.toString());
                 attachDTO.setUploadPath(uploadFolderPath);
-
+                // Part6 섬네일을 처리하는 단계
                 if (checkImageType(saveFile)) {
                     attachDTO.setImage(true);
 
@@ -158,7 +158,7 @@ public class UploadController {
         log.info("file: " + file);
 
         ResponseEntity<byte[]> result = null;
-
+        // Part6 파일의 확장자에 따라 적당한 MIME 타입 데이터를 지정
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Type", Files.probeContentType(file.toPath()));
@@ -166,13 +166,11 @@ public class UploadController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 
-    /**
+    /**Part6 첨부파일의 다운로드
      * Downloads a file.
-     *
      * @param userAgent the user agent string
      * @param fileName the name of the file
      * @return the file as a resource with appropriate headers
@@ -252,13 +250,14 @@ public class UploadController {
         return new ResponseEntity<String>("deleted", HttpStatus.OK);
     }
 
-    /**
+    /**Part6 섬네일을 처리하는 단계
      * Checks if a file is an image type.
      *
      * @param file the file to check
      * @return true if the file is an image, false otherwise
      */
     private boolean checkImageType(File file) {
+        // 이미지 파일 여부의 판단
         try {
             String contentType = Files.probeContentType(file.toPath());
             return contentType.startsWith("image");
@@ -269,13 +268,17 @@ public class UploadController {
         return false;
     }
 
-    /**
+    /**Part6 중복된 이름의 파일 처리
      * Gets the current date folder for uploads.
      *
      * @return the date folder as a string
      */
     private String getFolder() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String str = sdf.format(date);
+        log.info("중복된 이름의 파일 처리 {}: " , str);
+
         return sdf.format(new Date());
     }
 }

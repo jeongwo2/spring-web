@@ -186,7 +186,7 @@ pageEncoding="UTF-8"%>
           formData.append("uploadFile", files[i]);
         }
 
-        // 파일 업로드 AJAX 요청 ex06 변경
+        // 파일 업로드 AJAX 요청- Part6 변경 브라우저에서 Ajax 의 처리
         $.ajax({
           url: '/uploadAjaxAction',
           processData: false,
@@ -212,8 +212,8 @@ pageEncoding="UTF-8"%>
         var str ="";
         // 업로드된 파일 목록을 순회
         $(uploadResultArr).each(function(i, obj){
-            // 이미지 파일인 경우
-            if(obj.image){
+            // Part6 화면에서의 다운로드 처리
+            if(obj.image){ // 이미지 파일인 경우
                 var fileCallPath =  encodeURIComponent( obj.uploadPath+ "/s_"+obj.uuid +"_"+obj.fileName);
 
                 str += "<li data-path='"+obj.uploadPath+"'";
@@ -268,6 +268,6 @@ pageEncoding="UTF-8"%>
        });
     });
 </script>
-<!--ex05: JQuery 파일 업로드, 삭제, 게시글 등록 기능 -->
 
+<!--ex05: JQuery 파일 업로드, 삭제, 게시글 등록 기능 -->
 <%@include file="../includes/footer.jsp"%>

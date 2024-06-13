@@ -6,12 +6,14 @@
        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
         ">
 <!--src/main/webapp/WEB-INF/spring/root-context.xml: 웹자원과 관련되지 않은 모든 자원의 설정-->
     <!-- part1: Root Context: defines shared resources visible to all other web components -->
@@ -71,6 +73,8 @@
     <!--part5 AOP: 공통적인 기능(예: 로깅, 트랜잭션 관리)이 코드를 재 사용 -->
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
-    <!--ex05  -->
+    <!--Part6 Task 설정  -->
     <context:component-scan base-package="com.example.myweb.task"></context:component-scan>
+    <task:annotation-driven/>
+
 </beans>

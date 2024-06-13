@@ -510,8 +510,9 @@ $(document).ready(function(){
 
      /* $.getJSON("/board/getAttachList", {bno: bno}, function(arr){
        console.log(arr);
-     }); *///end getjson
-
+     });
+     */
+     // Part6 게시물의 조회와 첨부파일
      $.getJSON("/board/getAttachList", {bno: bno}, function(arr){
         console.log(arr);
         var str = "";
