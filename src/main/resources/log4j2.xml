@@ -49,8 +49,13 @@
             <AppenderRef ref="logFile" level="INFO" />
         </Logger>
         <!-- Additional JDBC logging -->
-        <Logger name="javax.sql" additivity="false">
-            <AppenderRef ref="console" level="DEBUG" />
+        <Logger name="jdbc" additivity="false">
+            <AppenderRef ref="console" level="INFO" />
+            <AppenderRef ref="logFile" level="INFO" />
+        </Logger>
+
+        <Logger name="com.zaxxer.hikari">
+            <AppenderRef ref="console" level="INFO" />
             <AppenderRef ref="logFile" level="INFO" />
         </Logger>
 
@@ -67,11 +72,11 @@
         </Logger>
 
         <!-- SQL logs (assuming MyBatis) -->
-        <Logger name="org.apache.ibatis" additivity="false">
-            <AppenderRef ref="console" level="DEBUG" />
+        <Logger name="org.apache" additivity="false">
+            <AppenderRef ref="console" level="INFO" />
             <AppenderRef ref="logFile" level="INFO" />
         </Logger>
-        <Logger name="org.mybatis.spring" additivity="false">
+        <Logger name="org.mybatis" additivity="false">
             <AppenderRef ref="console" level="INFO" />
             <AppenderRef ref="logFile" level="INFO" />
         </Logger>

@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.myweb.mapper.MemberMapper">
-
+  <!-- Part7 MyBatis 의 <resultMap>을 활용해 Join 처리시에 발생하는 1:N 문제를 해결 -->
   <resultMap type="com.example.myweb.domain.MemberVO" id="memberMap">
     <id property="userid" column="userid"/>
     <result property="userid" column="userid"/>
@@ -24,7 +24,7 @@
     SELECT
           mem.userid,  userpw, username, enabled, mem.regdate, mem.updatedate, auth.auth
     FROM  tbl_member mem
-    LEFT OUTER JOIN tbl_member_auth auth
+    LEFT OUTER JOIN tbl_member_auth  auth
     on   mem.userid = auth.userid
     WHERE mem.userid = #{userid}
   </select>

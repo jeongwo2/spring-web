@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.User;
 
 import lombok.Getter;
 
-/**
+/** Part7
  * CustomUser class extends Spring's User class to add additional member fields and methods.
  * This class is used in Spring Security for authentication and authorization.
  *
@@ -22,8 +22,7 @@ import lombok.Getter;
 @Getter
 public class CustomUser extends User {
     private static final Logger log = LogManager.getLogger(CustomUser.class);
-    /**
-     * Serial version UID for serialization.
+    /**Serial version UID for serialization.
      */
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +33,7 @@ public class CustomUser extends User {
 
     /**
      * Constructor for creating a CustomUser object from username, password, and authorities.
-     *
+     * MemberVO를 UsersDetails 타입으로 변환하기
      * @param username The username of the user.
      * @param password The password of the user.
      * @param authorities The collection of granted authorities for the user.

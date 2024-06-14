@@ -22,12 +22,11 @@ public class CommonController {
 
 		model.addAttribute("msg", "Access Denied");
 	}
-
+    // Part7-5 커스텀 로그인 페이지
 	@GetMapping("/customLogin")
 	public void loginInput(String error, String logout, Model model) {
 
-		log.info("error: " + error);
-		log.info("logout: " + logout);
+		log.info("/customLogin  error {}, logout {}: ", error, logout);
 
 		if (error != null) {
 			model.addAttribute("error", "Login Error Check Your Account");

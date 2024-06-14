@@ -4,27 +4,22 @@
 	   xmlns:security="http://www.springframework.org/schema/security"
 	   xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<!-- XML configuration file for Spring Security -->
-	<!-- Spring Security configuration: URL 패턴과 해당 액세스 제어를 정의  -->
+
+	<!-- Part7-3 Spring Security XML configuration: URL 패턴과 해당 액세스 제어를 정의  -->
 	<security:http>
+		<!-- Part7-3 접근제한 설정: URL patterns and their access control -->
+		<security:intercept-url pattern="/sample/all" access="permitAll" />
+		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/sample/admin"  access="hasRole('ROLE_ADMIN')" />
 
-		<!-- URL patterns and their access control -->
-		<security:intercept-url pattern="/sample/all"
-								access="permitAll" />
-		<security:intercept-url
-			pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
-		<security:intercept-url pattern="/sample/admin"
-								access="hasRole('ROLE_ADMIN')" />
+		<!-- Part7-4 접근 제한 메시지의 처리: Custom AccessDeniedHandler for handling access denied -->
+		<security:access-denied-handler ref="customAccessDenied" />
 
-		<!-- Custom AccessDeniedHandler for handling access denied -->
-		<security:access-denied-handler
-			ref="customAccessDenied" />
-
-		<!-- Custom LoginSuccessHandler for handling login success -->
+		<!-- Part7-5 커스텀 로그인 페이지: Custom LoginSuccessHandler for handling login success -->
 		<security:form-login login-page="/customLogin"
 							 authentication-success-handler-ref="customLoginSuccess" />
 
-		<!-- Logout configuration -->
+		<!--  Part7-6 Logout configuration -->
 		<security:logout logout-url="/customLogout" invalidate-session="true" />
 
 		<!-- RememberMe configuration -->
@@ -42,20 +37,18 @@
 	<bean id="customLoginSuccess"
 		  class="com.example.myweb.security.CustomLoginSuccessHandler"></bean>
 
-	<!-- BCryptPasswordEncoder bean for password encoding -->
-	<!-- BCrypt 알고리즘을 사용하여 비밀번호를 인코딩 -->
+	<!-- Part7 BCrypt 알고리즘을 사용하여 비밀번호를 인코딩 -->
 	<bean id="bcryptPasswordEncoder"
 		  class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<!-- CustomUserDetailsService bean for user authentication -->
-	<!-- 사용자 인증 -->
+	<!-- Part7 사용자 인증 -->
 	<bean id="customUserDetailsService"
 		  class="com.example.myweb.security.CustomUserDetailsService"></bean>
 
-
-	<!-- AuthenticationManager configuration -->
+	<!-- Part7 회원 정보를 이용해서 로그인 처리:AuthenticationManager configuration -->
 	<security:authentication-manager>
-		<!-- AuthenticationProvider using CustomUserDetailsService and BCryptPasswordEncoder -->
+		<!-- UserDetailsService 를 구현한 CustomUserDetailsService 구성 -->
 		<security:authentication-provider
 			user-service-ref="customUserDetailsService">
 			<security:password-encoder

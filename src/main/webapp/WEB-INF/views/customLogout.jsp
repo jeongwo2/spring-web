@@ -14,7 +14,7 @@ pageEncoding="UTF-8"%>
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>SB Admin 2 - ex06 Bootstrap Admin Theme</title>
+	<title>SB Admin 2 - Part7 로그아웃의 처리 </title>
 
 	<!-- Bootstrap Core CSS -->
 	<link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -47,14 +47,13 @@ pageEncoding="UTF-8"%>
 					<h3 class="panel-title">Logout Page</h3>
 				</div>
 				<div class="panel-body">
+					<!-- Part7-6 로그아웃의 처리 -->
 					<form role="form" method='post' action="/customLogout">
 						<fieldset>
-
 							<!-- Change this to a button or input when using this as a form -->
 							<a href="index.html" class="btn btn-lg btn-success btn-block">Logout</a>
 						</fieldset>
-						<input type="hidden" name="${_csrf.parameterName}"
-							   value="${_csrf.token}" />
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 					</form>
 				</div>
 			</div>

@@ -14,11 +14,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 
 import lombok.extern.log4j.Log4j;
 
-/** ex06 사용자가 성공적으로 인증할 때
+/** Part7 사용자가 성공적으로 인증할 때
  * CustomLoginSuccessHandler is a class that implements the AuthenticationSuccessHandler interface.
  * This class is responsible for handling the successful authentication event in Spring Security.
  * It logs a warning message upon successful login and redirects the user to the appropriate page based on their roles.
- *
+ * 로그인 성공 후 특정 URI 로 이동하거나 쿠키 처리
  * @author YourName
  * @version 1.0
  * @since 2023-01-01
@@ -26,10 +26,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j2
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    /**
+    /** Part7
      * This method is called when a user successfully authenticates.
      * It logs a warning message, retrieves the user's roles, and redirects the user to the appropriate page.
-     *
+     * 로그인 성공 후 특정 URI 로 이동하거나 쿠키 처리 등의 추가적인 작업
      * @param request The HttpServletRequest object representing the incoming request.
      * @param response The HttpServletResponse object representing the outgoing response.
      * @param auth The Authentication object representing the authenticated user.

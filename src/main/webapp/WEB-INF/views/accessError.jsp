@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>ex06 accessError</title>
+    <title>Part7-5 accessError</title>
 </head>
 <body>
 <h1>Access Denied Page</h1>

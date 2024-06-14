@@ -5,10 +5,11 @@
          version="4.0">
 
     <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
-    <!-- ex06 add Spring Web Security -->
+    <!-- Part7 add security-context.xml -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/spring/root-context.xml, /WEB-INF/spring/security-context.xml</param-value>
+        <param-value>/WEB-INF/spring/root-context.xml,
+            /WEB-INF/spring/security-context.xml</param-value>
     </context-param>
 
     <!-- Creates the Spring Container shared by all Servlets and Filters -->
@@ -49,4 +50,14 @@
     </filter-mapping>
     <!-- 한글 변환 필터 끝 -->
 
+    <!--Part7 스프링 시큐리트를 위한 설정 -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

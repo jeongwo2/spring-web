@@ -129,23 +129,24 @@ public class SampleController {
         log.info("----------------------------------");
     }
 
-    // ex06
+    // Part7 시큐리티 적용이 필요한 URI 설계
+    // http://localhost:8081/sample/all
     @GetMapping("/all")
     public void doAll() {
 
-        log.info("do all can access everybody");
+        log.info("do all can access everybody{}", "로그인을 하지 않은 사용자도 접근 가능한 URI");
     }
 
     @GetMapping("/member")
     public void doMember() {
 
-        log.info("logined member");
+        log.info("logined member {}", "로그인 한 사용자들만이 접근할 수 있는 URI");
     }
 
     @GetMapping("/admin")
     public void doAdmin() {
 
-        log.info("admin only");
+        log.info("admin only {}", "관리자 권한을 가진 사용자만이 접근");
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MEMBER')")

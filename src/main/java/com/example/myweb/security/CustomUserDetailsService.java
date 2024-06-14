@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j;
  * CustomUserDetailsService is a class that implements the UserDetailsService interface
  * provided by Spring Security. It is responsible for loading user-specific data from the
  * database and creating a CustomUser object for authentication and authorization purposes.
- *
+ * 스프링 시큐리티의 UserDetailsService 를 구현하고, MemberMapper 타입의 인스턴스를 주입 받아서 실제 기능을 구현
  * @author YourName
  * @version 1.0
  * @since 2023-01-01
@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j2
 public class CustomUserDetailsService implements UserDetailsService {
 
-    /**
+    /** Part7 : MemberMapper 타입의 인스턴스를 주입
      * MemberMapper is an interface that provides methods for interacting with the database
      * to retrieve member-related data. It is autowired to facilitate database operations.
      */
@@ -50,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         log.info("queried by member mapper: " + vo);
 
-        // 데이터베이스에서 사용자를 찾지 못한 경우 null을 반환합니다.
+        // 데이터베이스에서 사용자를 찾지 못한 경우 null 을 반환합니다.
         // 그렇지 않으면 CustomUser 객체를 생성하여 반환합니다.
         return vo == null? null : new CustomUser(vo);
     }
