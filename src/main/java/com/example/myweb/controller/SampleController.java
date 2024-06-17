@@ -163,7 +163,7 @@ public class SampleController {
         log.info("admin Annotaion only");
     }
     // part4
-    @GetMapping(value = "/getSample", produces = { MediaType.APPLICATION_JSON_UTF8_VALUE,
+    @GetMapping(value = "/getSample", produces = { MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE })
     public SampleVO getSample() {
 
