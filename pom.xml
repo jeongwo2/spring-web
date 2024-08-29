@@ -77,14 +77,15 @@
         </dependency>
 
         <!-- Logging Library: log4j->Slf4j-> logback-> log4j2 ====-->
-        <!-- log4j 의존성 제거 -->
+        <!-- log4j 의존성 제거 후 log4j2.xml
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
             <scope>runtime</scope>
         </dependency>
-
+        -->
+        <!-- Slf4J(Simple Logging Facade For Java) -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -120,12 +121,14 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>${log4j2-version}</version>
+            <!--
             <exclusions>
                 <exclusion>
                     <artifactId>log4j-api</artifactId>
                     <groupId>org.apache.logging.log4j</groupId>
                 </exclusion>
             </exclusions>
+            -->
         </dependency>
         <!-- Apache Log4j2를 SLF4J로 래핑하는 구현체 -->
         <dependency>
@@ -242,7 +245,7 @@
         <!-- SQL 을 변환해 PreparedStatement 에 사용된 '?'가 값 확인 -->
         <dependency>
             <groupId>org.bgee.log4jdbc-log4j2</groupId>
-            <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+            <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
             <version>1.16</version>
         </dependency>
 

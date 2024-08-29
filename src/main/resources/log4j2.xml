@@ -3,22 +3,21 @@
     <!-- log4j2.xml 설정파일을 로드할 때, 내부적으로 DEBUG 레벨로 찍고 있음 -->
     <!-- 프로퍼티를 정의하여 로그 파일의 저장 경로를 설정 -->
     <Properties>
-        <Property name="projectName">myweb </Property>
-        <Property name="logDir">C:/logs/log4j2/${projectName}</Property>
-        <Property name="archive">C:/logs/log4j2/${projectName}/archive</Property>
-        <Property name="pattern">%d{yyyy-MM-dd HH:mm} [%-5p] %M -%msg%n</Property>
+        <Property name="projName">myweb </Property>
+        <Property name="logDir">C:/logs/log4j2/${projName}</Property>
+        <Property name="archive">C:/logs/log4j2/${projName}/archive</Property>
+        <Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss} [%-5p] %c - %msg%n %xEx{full}</Property>
     </Properties>
 
     <Appenders>
-        <!-- Console appender -->
+        <!-- 콘솔에 로그를 출력하는 설정 -->
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5p] %c - %msg%n %xEx{full}</Pattern>
-            </PatternLayout>
+            <PatternLayout pattern="${logPattern}"/>
         </Console>
+
         <RollingFile name="logFile"
-                     fileName="${logDir}/${date:yyyy-MM-dd}-${projectName}.log"
-                     filePattern="${logDir}/${projectName}-%d{yyyy-MM-dd}-%i.log.gz">
+                     fileName="${logDir}/${date:yyyy-MM-dd}-${projName}.log"
+                     filePattern="${logDir}/${projName}-%d{yyyy-MM-dd}-%i.log.gz">
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
             </PatternLayout>
@@ -38,21 +37,6 @@
     </Appenders>
     <!-- ALL<TRACE<DEBUG<INFO<WARN<ERROR<FATAL<OFF -->
     <Loggers>
-        <!-- 전체: root, 스프링 프레임워크: org.springframework -->
-        <Root level="DEBUG" > <!-- additivity=false: 로깅메시지 중복 방지 -->
-            <AppenderRef ref="logFile"/>
-            <AppenderRef ref="console"/>
-        </Root>
-        <!-- General SQL logs -->
-        <Logger name="java.sql" additivity="false">
-            <AppenderRef ref="console" level="DEBUG" />
-            <AppenderRef ref="logFile" level="INFO" />
-        </Logger>
-        <!-- Additional JDBC logging -->
-        <Logger name="jdbc" additivity="false">
-            <AppenderRef ref="console" level="INFO" />
-            <AppenderRef ref="logFile" level="INFO" />
-        </Logger>
 
         <Logger name="com.zaxxer.hikari">
             <AppenderRef ref="console" level="INFO" />
@@ -80,6 +64,17 @@
             <AppenderRef ref="console" level="INFO" />
             <AppenderRef ref="logFile" level="INFO" />
         </Logger>
+        <!-- General SQL logs -->
+        <Logger name="java.sql" additivity="false">
+            <AppenderRef ref="console" level="DEBUG" />
+            <AppenderRef ref="logFile" level="INFO" />
+        </Logger>
+
+        <!-- 전체: root, 스프링 프레임워크: org.springframework -->
+        <Root level="DEBUG" > <!-- additivity=false: 로깅메시지 중복 방지 -->
+            <AppenderRef ref="logFile"/>
+            <AppenderRef ref="console"/>
+        </Root>
     </Loggers>
 
 </Configuration>

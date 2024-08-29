@@ -311,14 +311,25 @@ root-context.xml                    dataSource
 log4jdbc.spylogdelegator.name=net.sf.log4jdbc.log.slf4j.Slf4jSpyLogDelegator
 ```
 
-✔️ log4j2.xml
+📑 log4j2.xml
 STS Console 창에서 SQL 쿼리 Log 를 자세히 출력을 위한 설정  
 ```
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+
+<!-- Logger 설정 -->
+<Loggers>
 <!-- Root Logger -->
-<root>
-    <priority value="warn" /> <!-- warn 에서 debug 로 수정시 sql 확인 -->
-    <appender-ref ref="console" />
-</root>
+<Root level="debug" additivity="false" >
+    <!-- warn 에서 debug 로 수정시 sql 확인 -->
+    <AppenderRef ref="console"/>
+ </Logger>
+  <!-- 스프링 프레임워크에서 찍는건 level을 info로 설정 -->
+  <Logger name="org.springframework" level="info" additivity="false">
+    <AppenderRef ref="console"/>
+  </Logger>
+
+</Configuration>
 ```
 🔗 JDBC 의 Driver 변경 [root-context.xml]
 ```
@@ -332,6 +343,34 @@ STS Console 창에서 SQL 쿼리 Log 를 자세히 출력을 위한 설정
    </property>
 </bean>
 ```
+📑 J@Log4j2 
+```bazaar
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+@Controller
+@Getter
+@ToString
+@Log4j2
+public class HomeController { 
+    final static Logger logger = LogManager.getLogger(HomeController.class);
+    
+    @RequestMapping(value = "/", method = RequestMethod.GET) 
+    public String home(Locale locale, Model model) { 
+       log.info("Log4j2.................."); 
+	   log.info("Welcome home! The client locale is {}.", locale); 
+	   Date date = new Date(); 
+       DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, 
+         locale); 
+       String formattedDate = dateFormat.format(date); 
+       model.addAttribute("serverTime", formattedDate ); 
+       return "home"; 
+   } 
+ }
+```
+
 1. Mapper 인터페이스   
 
 2. Mapper 인터페이스의 설정/인식
